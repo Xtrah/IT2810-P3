@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 interface PokemonAttributes {
   name: string;
   description: string;
+  types: string[];
+  weight: number;
+  height: number;
+  imageUrl: string;
 }
 
 interface PokemonModel extends mongoose.Model<PokemonDoc> {
@@ -21,6 +25,24 @@ const pokemonSchema = new Schema({
     required: true,
   },
   description: {
+    type: String,
+    required: true,
+  },
+  types: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  weight: {
+    type: Number,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
+  },
+  imageUrl: {
     type: String,
     required: true,
   },
