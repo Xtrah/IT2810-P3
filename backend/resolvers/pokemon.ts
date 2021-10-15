@@ -1,10 +1,18 @@
 import { Pokemon, PokemonAttributes } from '../models/pokemon';
 
 const pokemonResolver = {
-  // Return all pokemons
-  pokemons: async () => {
+  // Return all pokemons or query on name
+  pokemons: async (args: { name: string }) => {
     try {
-      const pokemons = await Pokemon.find();
+      /*
+        Defining name query is optional.
+        Query doesn't have to be exact as name.
+        Query is case insensitive. 
+      */
+      const queryOptions = {
+        name: { $regex: new RegExp(args.name || '', 'i') },
+      };
+      const pokemons = await Pokemon.find(queryOptions);
       return pokemons;
     } catch (err) {
       throw err;

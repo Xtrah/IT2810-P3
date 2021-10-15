@@ -13,7 +13,7 @@ input PokemonInput {
 }
 
 type RootQuery {
-  pokemons: [Pokemon!]!
+  pokemons(name: String): [Pokemon!]!
 }
 
 type RootMutation {
