@@ -20,11 +20,16 @@ const pokemonResolver = {
   },
   // Create a pokemon with certain attributes
   createPokemon: async (args: { pokemonInput: PokemonAttributes }) => {
-    const { name, description } = args.pokemonInput;
+    const { name, description, types, height, weight, imageUrl } =
+      args.pokemonInput;
 
     const pokemon = Pokemon.build({
       name,
       description,
+      types,
+      height,
+      weight,
+      imageUrl,
     });
 
     try {

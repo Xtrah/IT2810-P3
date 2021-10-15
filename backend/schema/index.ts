@@ -1,15 +1,22 @@
 import { buildSchema } from 'graphql';
 
+const pokemonFields = `
+name: String!
+description: String!
+types: [String!]!
+weight: Int!
+height: Int!
+imageUrl: String!
+`;
+
 const schema = buildSchema(`
 type Pokemon {
   _id: ID!
-  name: String!
-  description: String!
+  ${pokemonFields}
 }
 
 input PokemonInput {
-  name: String!
-  description: String!
+  ${pokemonFields}
 }
 
 type RootQuery {
