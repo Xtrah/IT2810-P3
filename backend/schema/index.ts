@@ -20,7 +20,7 @@ input PokemonInput {
 }
 
 type RootQuery {
-  pokemons(name: String): [Pokemon!]!
+  pokemons(name: String, sortDescending: Boolean, type: String): [Pokemon!]!
 }
 
 type RootMutation {
