@@ -20,7 +20,6 @@ function Home() {
   const [searchText, setSearchText] = useState('');
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
     variables: { name: searchText }, // Queries when search text changes
-    pollInterval: 2000, // milliseconds between fetches
   });
 
   const changeSettings = () => {
@@ -42,7 +41,7 @@ function Home() {
     }
     if (data) {
       return data.pokemons?.map((pokemon: Pokemon) => (
-        <PokemonCard pokemon={pokemon} />
+        <PokemonCard pokemon={pokemon} key={pokemon._id} />
       ));
     }
     return null;
