@@ -40,7 +40,7 @@ src
 
 ### GraphQL
 
-For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's easy to get started as it's little setup. What's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, so queries after the initial query first check the cache, making the subsequent queries fast.
+For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's easy to get started as it's little setup. What's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache. Queries after the initial query will first check the cache (unless the cache is customized). This makes queries very fast.
 
 ### Chakra UI
 
