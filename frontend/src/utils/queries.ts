@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // Get pokemons with all fields
 export const GET_POKEMONS = gql`

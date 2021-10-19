@@ -1,7 +1,7 @@
-import { Box, Center, Text, Image } from "@chakra-ui/react";
-import { PokemonLimited } from "../types/pokemon";
-import { getGradientByType } from "../utils/getGradientByType";
-import getIconByType from "../utils/getIconByType";
+import { Box, Center, Text, Image } from '@chakra-ui/react';
+import { PokemonLimited } from '../types/pokemon';
+import { getGradientByType } from '../utils/getGradientByType';
+import getIconByType from '../utils/getIconByType';
 
 interface Props {
   pokemon: PokemonLimited;

@@ -1,13 +1,13 @@
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { ChakraProvider } from "@chakra-ui/react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import Home from "../pages/Home";
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { ChakraProvider } from '@chakra-ui/react';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import Home from '../pages/Home';
 
-describe("<Home />", () => {
-  it("search field reacts to user input", () => {
+describe('<Home />', () => {
+  it('search field reacts to user input', () => {
     const client = new ApolloClient({
-      uri: "http://localhost:4000/graphql",
+      uri: 'http://localhost:4000/graphql',
       cache: new InMemoryCache(),
     });
 
@@ -19,9 +19,9 @@ describe("<Home />", () => {
       </ApolloProvider>
     );
 
-    const inputText = "squirtle";
+    const inputText = 'squirtle';
     const input = getByPlaceholderText(
-      "Enter pokemon name"
+      'Enter pokemon name'
     ) as HTMLInputElement;
 
     userEvent.type(input, inputText);

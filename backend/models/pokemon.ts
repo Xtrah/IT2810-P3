@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars, no-use-before-define */
 
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Describes attributes for new pokemon
 interface PokemonAttributes {
@@ -54,7 +54,7 @@ const pokemonSchema = new Schema({
 pokemonSchema.statics.build = (attrs: PokemonAttributes) => new Pokemon(attrs);
 
 const Pokemon = mongoose.model<PokemonDoc, PokemonModel>(
-  "Pokemon",
+  'Pokemon',
   pokemonSchema
 );
 
