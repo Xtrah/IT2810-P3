@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 /**
  * Returns gradient-values based on Pokémon-type
  * @param type string depicting Pokémon-type

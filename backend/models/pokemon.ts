@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars, no-use-before-define */
+
 import mongoose from 'mongoose';
 
 // Describes attributes for new pokemon

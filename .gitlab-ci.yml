@@ -1,35 +1,35 @@
-image: node:latest
+image: node:14.17.0
 
 stages:
   - lint
   - test
 
-eslint:
+lint-frontend:
   stage: lint
   script:
-    # install ESLint in container
-    - |
-      npm install eslint \
-      eslint-config-airbnb \
-      eslint-config-prettier \
-      eslint-plugin-flowtype \
-      eslint-plugin-import \
-      eslint-plugin-jsx-a11y \
-      eslint-plugin-prettier \
-      eslint-plugin-react
-    # run ESLint
-    - node_modules/.bin/eslint src/*.tsx --max-warnings=0
+    - cd frontend && npm install
+    - node_modules/.bin/eslint src/*.tsx src/*.ts src/**/*.tsx src/**/*.ts
+    - node_modules/.bin/prettier -c .
 
-prettier:
+lint-backend:
   stage: lint
   script:
-    # install prettier in container
-    - npm install -g prettier
-    # run prettier checks
-    - prettier -c src/*.tsx
+    - cd backend && npm install
+    - node_modules/.bin/eslint *.ts **/*.ts
+    - node_modules/.bin/prettier -c .
 
-test:
+test-frontend:
   stage: test
+  needs: [lint-frontend]
   script:
+    - cd frontend
+    - npm install
+    - npm run test
+
+test-backend:
+  stage: test
+  needs: [lint-backend]
+  script:
+    - cd backend
     - npm install
     - npm run test

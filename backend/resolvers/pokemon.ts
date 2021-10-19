@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-catch */
+
 import { Pokemon, PokemonAttributes } from '../models/pokemon';
 
 interface QueryOptions {

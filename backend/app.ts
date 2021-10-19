@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import express from 'express';
 import rootResolver from './resolvers';
 import bodyParser from 'body-parser';
