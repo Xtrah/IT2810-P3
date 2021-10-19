@@ -6,24 +6,25 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
-import { SettingsIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_POKEMONS_LIMITED } from '../utils/queries';
-import PokemonCard from '../components/PokemonCard';
-import { Pokemon } from '../types/pokemon';
+  Spinner,
+} from "@chakra-ui/react";
+
+import { SettingsIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_POKEMONS_LIMITED } from "../utils/queries";
+import PokemonCard from "../components/PokemonCard";
+import { Pokemon } from "../types/pokemon";
 
 // Home is the home page component, containing search and search results
 function Home() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
     variables: { name: searchText }, // Queries when search text changes
   });
 
   const changeSettings = () => {
-    console.log('Click');
+    console.log("Click");
   };
 
   // Returns UI according to status of data

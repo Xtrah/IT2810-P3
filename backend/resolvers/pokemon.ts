@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 
-import { Pokemon, PokemonAttributes } from '../models/pokemon';
+import { Pokemon, PokemonAttributes } from "../models/pokemon";
 
 interface QueryOptions {
   name: { $regex: RegExp };
@@ -24,7 +24,7 @@ const pokemonResolver = {
         Query is case insensitive. 
       */
       const queryOptions: QueryOptions = {
-        name: { $regex: new RegExp(args.name || '', 'i') },
+        name: { $regex: new RegExp(args.name || "", "i") },
       };
       // Query on type is optional
       if (args.type) {

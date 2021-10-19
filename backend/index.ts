@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
-import { app } from './app';
+import mongoose from "mongoose";
+import { app } from "./app";
 
 // Secrets should be kept secret, for example env file, but hardcoded here for the project
-const DBUSER = 'admin';
-const DBPASSWORD = 'admin';
-const DBNAME = 'pokedex';
+const DBUSER = "admin";
+const DBPASSWORD = "admin";
+const DBNAME = "pokedex";
 
 const start = async () => {
   const options = {
@@ -23,7 +23,7 @@ const start = async () => {
   }
 
   app.listen(4000, () => {
-    console.log('Listening on port 4000');
+    console.log("Listening on port 4000");
   });
 };
 

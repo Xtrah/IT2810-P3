@@ -1,4 +1,4 @@
-import pokemonResolver from './pokemon';
+import pokemonResolver from "./pokemon";
 
 const rootResolver = {
   ...pokemonResolver,
