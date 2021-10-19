@@ -6,25 +6,34 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
-import { SettingsIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_POKEMONS_LIMITED } from '../utils/queries';
-import PokemonCard from '../components/PokemonCard';
-import { Pokemon } from '../types/pokemon';
+  Select,
+  Collapse,
+  Box,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
+import { SettingsIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_POKEMONS_LIMITED } from "../utils/queries";
+import PokemonCard from "../components/PokemonCard";
+import { Pokemon } from "../types/pokemon";
 
 // Home is the home page component, containing search and search results
 function Home() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [filterType, setFilterType] = useState("");
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
-    variables: { name: searchText }, // Queries when search text changes
+    variables: { name: searchText, type: filterType }, // Queries when search text changes
   });
 
-  const changeSettings = () => {
-    console.log('Click');
-  };
+  const { isOpen, onToggle } = useDisclosure();
+
+  /*  const changeSettings = () => {
+    console.log("Click");
+  }; */
+
+ 
 
   // Returns UI according to status of data
   const dataResult = () => {
@@ -49,7 +58,7 @@ function Home() {
 
   return (
     <Container>
-      <InputGroup size="md" mb={4}>
+      <InputGroup size="md">
         <Input
           value={searchText}
           pr="4rem"
@@ -57,20 +66,32 @@ function Home() {
           placeholder="Enter pokemon name"
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <InputRightElement width="2.5rem">
-          <Button
-            bgColor="red.500"
-            color="white"
-            h="1.75rem"
-            size="sm"
-            m={2}
-            onClick={changeSettings}
-          >
-            <SettingsIcon />
-          </Button>
-        </InputRightElement>
+        <Button onClick={onToggle}>
+          Filter
+          <SettingsIcon />
+        </Button>
+        <InputRightElement width="2.5rem"></InputRightElement>
       </InputGroup>
 
+      <Collapse in={isOpen} animateOpacity>
+          <Box
+            p="40px"
+            mt="4"
+            border="2px"
+            borderColor="red"
+            rounded="md"
+            shadow="md"
+          >
+            <Select onChange={(e) => setFilterType(e.target.value)} defaultValue={""}>
+              <option value="">Show all</option>
+              <option value="normal">Normal</option>
+              <option value="fire">Fire</option>
+              <option value="water">Water</option>
+              <option value="grass">Grass</option>
+              <option value="electric">Electric</option>
+            </Select>
+          </Box>
+        </Collapse>
       {dataResult()}
     </Container>
   );
