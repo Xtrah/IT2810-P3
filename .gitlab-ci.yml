@@ -1,0 +1,35 @@
+image: node:14.17.0
+
+stages:
+  - lint
+  - test
+
+lint-frontend:
+  stage: lint
+  script:
+    - cd frontend && npm install
+    - node_modules/.bin/eslint src/*.tsx src/*.ts src/**/*.tsx src/**/*.ts
+    - node_modules/.bin/prettier -c .
+
+lint-backend:
+  stage: lint
+  script:
+    - cd backend && npm install
+    - node_modules/.bin/eslint *.ts **/*.ts
+    - node_modules/.bin/prettier -c .
+
+test-frontend:
+  stage: test
+  needs: [lint-frontend]
+  script:
+    - cd frontend
+    - npm install
+    - npm run test
+
+test-backend:
+  stage: test
+  needs: [lint-backend]
+  script:
+    - cd backend
+    - npm install
+    - npm run test

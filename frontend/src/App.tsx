@@ -1,6 +1,6 @@
 import { ChakraProvider, Box } from '@chakra-ui/react';
-import Home from './pages/Home';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import Home from './pages/Home';
 
 const App = () => {
   const client = new ApolloClient({

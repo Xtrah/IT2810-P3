@@ -6,8 +6,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
 } from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
+
 import { SettingsIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';

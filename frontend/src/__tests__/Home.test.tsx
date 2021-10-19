@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ChakraProvider } from '@chakra-ui/react';
-import Home from '../pages/Home';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import Home from '../pages/Home';
 
 describe('<Home />', () => {
   it('search field reacts to user input', () => {

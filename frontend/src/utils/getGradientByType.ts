@@ -1,11 +1,13 @@
+/* eslint-disable import/prefer-default-export */
+
 /**
  * Returns gradient-values based on Pokémon-type
  * @param type string depicting Pokémon-type
  * @returns gradient values on format (gradient-angle, hex1 colorstop1, hex1 colorstop2)
  */
 export const getGradientByType = (type: string) => {
-  let sizeLeft: number = 20;
-  let sizeRight: number = 80;
+  const sizeLeft: number = 20;
+  const sizeRight: number = 80;
   const gradientMap = new Map([
     ['normal', `#A8A878 ${sizeLeft}%, #645D23 ${sizeRight}%`],
     ['fire', `#F08030 ${sizeLeft}%, #a04009 ${sizeRight}%`],
