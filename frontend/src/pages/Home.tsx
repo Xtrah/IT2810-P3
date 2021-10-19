@@ -51,6 +51,7 @@ function Home() {
     <Container>
       <InputGroup size="md" mb={4}>
         <Input
+          name="searchInput"
           value={searchText}
           pr="4rem"
           type="text"
