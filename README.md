@@ -25,10 +25,21 @@ npm run start
 
 ## Frontend
 
+### Scripts
+
+`cd frontend` - change to frontend directory
 `npm install` - install dependencies
 `npm start` - start server in development mode
 `npm build` - bundle code into build directory for production
+
+#### Run tests
+
+While in frontend directory:
 `npm test` - run tests
+`npm run cy:run` - run cypress tests (headlessly)
+`npm run cy:open` - run cypress tests (with GUI)
+
+Cypress tests assumes you have backend and frontend running.
 
 ### File structure
 
@@ -58,6 +69,8 @@ We chose a component library as it speeds up development giving good looking des
 ### Tests
 
 We have tested the application in multiple ways. Using [Jest](https://jestjs.io/) as a test runner, we tested utility functions using input and expected output. We made a simple render test for app using [testing-library](https://testing-library.com/docs/react-testing-library/intro/). With this we also tested user interaction on input. For test of displaying of data we used snapshot test, using [renderer](https://reactjs.org/docs/test-renderer.html).
+
+We have used [cypress](https://docs.cypress.io/) for end to end tests. These tests mimic user interaction, but are slower than unit and integration tests. We have tested the search input and the results, checking for input and expecting correct results.
 
 ## Backend
 
