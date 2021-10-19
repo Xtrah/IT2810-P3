@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PokemonCard /> should match snapshot with data 1`] = `
+Array [
+  <div
+    className="css-1tgw0e5"
+  >
+    <div
+      className="css-1g3r3q7"
+    >
+      <p
+        className="chakra-text css-79wky"
+      >
+        Charizard
+        <img
+          alt="Charizard"
+          className="chakra-image css-h13pur"
+          src="fire.svg"
+        />
+      </p>
+    </div>
+    <img
+      alt="Charizard"
+      className="chakra-image__placeholder css-8dgyiu"
+      src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+    />
+  </div>,
+  <span />,
+]
+`;
