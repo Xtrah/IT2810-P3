@@ -1,5 +1,4 @@
 interface APIPokemon {
-  id: string;
   name: string;
   height: number;
   weight: number;
@@ -26,30 +25,29 @@ interface Description {
 }
 
 interface FilteredPokemon {
-  id: string;
   name: string;
-  image: string;
   height: number;
   weight: number;
   types: string[];
   description: string;
+  imageUrl: string;
 }
 
 export const fetchPokemon = async () => {
   let pokemonData: FilteredPokemon[] = [];
-  const amountOfPokemon = 5;
-  for (let pokemonId = 1; pokemonId <= amountOfPokemon; pokemonId++) {
+  const fromPokemon = 1;
+  const lastPokemon = 151;
+  for (let pokemonId = fromPokemon; pokemonId <= lastPokemon; pokemonId++) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
       .then<APIPokemon>((res) => res.json())
       .then((res) => {
         let pokemon: FilteredPokemon = {
-          id: res.id,
           name: res.name,
-          image: res.sprites.front_default,
+          types: res.types.map((type) => type.type.name),
+          description: "",
           height: res.height,
           weight: res.weight,
-          types: res.types.map((type) => type.type.name),
-          description: '',
+          imageUrl: res.sprites.front_default,
         };
         fetch(`https://pokeapi.co/api/v2/characteristic/${pokemonId}/`)
           .then<APICharacteristics>((res) => res.json())
