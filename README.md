@@ -9,19 +9,26 @@ project3
 ```
 
 First start the backend.
-`cd backend`
-`npm run dev`
+
+```
+cd backend
+npm run dev
+```
 
 Then start the frontend.
-`cd ..`
-`cd frontend`
-`npm run start`
+
+```
+cd ..
+cd frontend
+npm run start
+```
 
 ## Frontend
 
 `npm install` - install dependencies
 `npm start` - start server in development mode
 `npm build` - bundle code into build directory for production
+`npm test` - run tests
 
 ### File structure
 
@@ -45,6 +52,10 @@ For use of GraphQL on the client side we chose [Apollo client](https://www.apoll
 ### Chakra UI
 
 We chose a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses prop so it's easy to customize and it's intuitive to use.
+
+### Tests
+
+We have tested the application in multiple ways. Using [Jest](https://jestjs.io/) as a test runner, we tested utility functions using input and expected output. We made a simple render test for app using [testing-library](https://testing-library.com/docs/react-testing-library/intro/). With this we also tested user interaction on input. For test of displaying of data we used snapshot test, using [renderer](https://reactjs.org/docs/test-renderer.html).
 
 ## Backend
 
