@@ -1,8 +1,5 @@
-import { Box, Center, Text, Image, Select } from '@chakra-ui/react';
+import { Select } from '@chakra-ui/react';
 import { Dispatch, SetStateAction } from 'react';
-import { PokemonLimited } from '../types/pokemon';
-import { getGradientByType } from '../utils/getGradientByType';
-import getIconByType from '../utils/getIconByType';
 
 interface Props {
   setSelectedType: Dispatch<SetStateAction<string>>;
