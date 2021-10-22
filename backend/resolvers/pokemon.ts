@@ -26,15 +26,15 @@ const pokemonResolver = {
       const queryOptions: QueryOptions = {
         name: { $regex: new RegExp(args.name || '', 'i') },
       };
-      
+
       if (args.type) {
         queryOptions.types = args.type.toLowerCase();
       }
 
       const pokemons = await Pokemon.find(queryOptions)
         .limit(10) // Limit number of items per fetch
-        .skip(args.offset || 0) // Used for skipping already fetched items. 
-        .collation({'locale':'en'}) // Case insensitive sort. 
+        .skip(args.offset || 0) // Used for skipping already fetched items.
+        .collation({ locale: 'en' }) // Case insensitive sort.
         .sort({ name: args.sortDescending ? -1 : 1 }) // Sort alphabetically by default
         .exec();
       return pokemons;
