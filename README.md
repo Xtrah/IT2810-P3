@@ -43,15 +43,16 @@ While in frontend directory:
 - `npm run cy:run` to run cypress tests (headlessly)
 - `npm run cy:open` to run cypress tests (with GUI)
 
-Cypress tests assumes you have backend and frontend running.
+Cypress tests assume you have backend and frontend running.
 
 ### Frontend file structure
 
-We wanted a file structure which supports maintainability and you can find functionality in files where you expect to find them. `components` contains components which have been extracted for easier read or are reused. `pages` contains components which are parents for a route. functions for the graphql- queries and -mutations. `types` contains the typescript typings. `utils` contains functions which are extracted for easier read or helper functions which are used multiple places. In `utils` we have the graphql strings we use to query and mutate data. `App.tsx` is the root component.
+We wanted a file structure which supports maintainability and you can find functionality in files where you expect to find them. `components` contains components which have been extracted for easier read or are reused. `pages` contains components which are parents for a route. functions for the graphql- queries and -mutations. `types` contains the typescript typings. `utils` contains functions which are extracted for easier read or helper functions which are used multiple places. In `utils` we have the graphql strings we use to query and mutate data. `App.tsx` is the root component. As for tests, cypress tests are in `/cypress` while the other tests are in `src/__tests__`.
 
 ```
-frontend
+cypress
 src
+├───__tests__
 ├───components
 ├───pages
 ├───types
@@ -62,11 +63,15 @@ src
 
 ### GraphQL
 
-For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's easy to get started as it's little setup. What's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache. Queries after the initial query will first check the cache (unless the cache is customized). This makes queries very fast.
+For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's little setup, and what's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, which can make queries very fast. By default, the queries check the queries first, then the network.
+
+For pagination we [configured the cache](https://www.apollographql.com/docs/react/pagination/offset-based/#setting-keyargs-with-offsetlimitpagination), merging incoming data according to our key arguments. We also used the `fetchMore`-function from `useQuery` to call more items.
+
+There are many [different pagination strategies](https://www.apollographql.com/docs/react/pagination/overview/) a server can use. We thought offset was intuitive to use with mongodb and [suitable for this project](https://piazza.com/class/ksk8rtnewz56sh?cid=154), even though it can be less effective in [huge datasets](https://stackoverflow.com/questions/55744926/offset-pagination-vs-cursor-pagination).
 
 ### Chakra UI
 
-We chose a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses prop so it's easy to customize and it's intuitive to use.
+We wanted a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses props so it's easy to customize and it's intuitive to use.
 
 ### 🧪 Tests using Jest and Cypress
 
@@ -90,8 +95,8 @@ Get all pokemons or query according to parameters.
 
 ```
 
-query ($name: String, $sortDescending: Boolean, $type: String) {
-pokemons(name: $name, sortDescending: $sortDescending, type: $type) {
+query ($name: String, $sortDescending: Boolean, $type: String, $offset: Int) {
+pokemons(name: $name, sortDescending: $sortDescending, type: $type, offset: $offset) {
 \_id
 name
 description
@@ -104,7 +109,7 @@ imageUrl
 
 ```
 
-Example variables: `{"name": "Squirtle", "sortDescending": true, "type": "water"}`
+Example variables: `{"name": "Squirtle", "sortDescending": true, "type": "water", "offset": 50}`
 Example results:
 
 ```
