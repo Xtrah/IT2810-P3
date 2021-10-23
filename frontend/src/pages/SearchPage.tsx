@@ -13,10 +13,14 @@ import { useQuery } from '@apollo/client';
 import { GET_POKEMONS_LIMITED } from '../utils/queries';
 import SearchResults from '../components/SearchResults';
 
+// This value aligns with the hardcoded limit in backend
+const ITEM_FETCH_LIMIT = 10;
+
 // SearchPage contains search and search results
 function SearchPage() {
   const [searchText, setSearchText] = useState('');
-  const [offset, setOffset] = useState(0);
+  // Start first fetchmore with offset, to add to the already fetched items
+  const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
   const { loading, error, data, fetchMore } = useQuery(GET_POKEMONS_LIMITED, {
     variables: { name: searchText }, // Queries when search text changes
   });
@@ -27,7 +31,7 @@ function SearchPage() {
 
   // If searchText changes, reset offset
   useEffect(() => {
-    setOffset(0);
+    setOffset(ITEM_FETCH_LIMIT);
   }, [searchText]);
 
   // Query more items and update offset
@@ -37,7 +41,7 @@ function SearchPage() {
         name: searchText,
         offset,
       },
-    }).then(() => setOffset(offset + 10));
+    }).then(() => setOffset(offset + ITEM_FETCH_LIMIT));
   };
 
   return (
