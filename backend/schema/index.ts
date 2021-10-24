@@ -20,6 +20,7 @@ input PokemonInput {
 }
 
 type RootQuery {
+  pokemon(_id: String): Pokemon!
   pokemons(name: String, sortDescending: Boolean, type: String, offset: Int): [Pokemon!]!
 }
 

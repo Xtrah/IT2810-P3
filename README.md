@@ -89,6 +89,26 @@ We have used [Cypress](https://docs.cypress.io/) for end to end tests. These tes
 
 ### API
 
+#### pokemon
+
+Get pokemon by id.
+
+```
+
+query($_id: String) {
+  pokemon(_id: $_id) {
+    _id
+    name
+    description
+    types
+    weight
+    height
+    imageUrl
+  }
+}
+
+```
+
 #### pokemons
 
 Get all pokemons or query according to parameters.
@@ -96,15 +116,15 @@ Get all pokemons or query according to parameters.
 ```
 
 query ($name: String, $sortDescending: Boolean, $type: String, $offset: Int) {
-pokemons(name: $name, sortDescending: $sortDescending, type: $type, offset: $offset) {
-\_id
-name
-description
-types
-weight
-height
-imageUrl
-}
+  pokemons(name: $name, sortDescending: $sortDescending, type: $type, offset: $offset) {
+    _id
+    name
+    description
+    types
+    weight
+    height
+    imageUrl
+    }
 }
 
 ```
@@ -141,15 +161,15 @@ Add a pokemon to the database.
 ```
 
 mutation ($name: String!, $description: String!, $types: [String!]!, $weight: Int!, $height: Int!, $imageUrl: String!) {
-createPokemon(pokemonInput: {name: $name, description: $description, types: $types, weight: $weight, height: $height, imageUrl: $imageUrl}) {
-\_id
-name
-description
-types
-weight
-height
-imageUrl
-}
+  createPokemon(pokemonInput: {name: $name, description: $description, types: $types, weight: $weight, height: $height, imageUrl: $imageUrl}) {
+    _id
+    name
+    description
+    types
+    weight
+    height
+    imageUrl
+  }
 }
 
 ```
