@@ -1,5 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import renderer from 'react-test-renderer';
+import { BrowserRouter as Router } from 'react-router-dom';
 import PokemonCard from '../components/PokemonCard';
 import { PokemonLimited } from '../types/pokemon';
 
@@ -18,7 +19,9 @@ describe('<PokemonCard />', () => {
     const elem = renderer
       .create(
         <ChakraProvider>
-          <PokemonCard pokemon={pokemonData} />
+          <Router>
+            <PokemonCard pokemon={pokemonData} />
+          </Router>
         </ChakraProvider>
       )
       .toJSON();
