@@ -2,7 +2,7 @@
 
 [![pipeline status](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3/badges/master/pipeline.svg)](https://gitlab.stud.idi.ntnu.no/it2810-h21/team-15/project3/-/commits/master)
 
-## 👩‍💻 Start the project
+## 👩‍💻 Development
 
 ```
 project3
@@ -25,7 +25,7 @@ cd frontend
 npm install && npm start
 ```
 
-## 🏙 Frontend
+### 🏙 Frontend
 
 - `cd frontend` to go to frontend directory
 - `npm install` to install dependencies
@@ -33,12 +33,12 @@ npm install && npm start
 - `npm run lint` to run prettier and eslint checks
 - `npm build` to minify and build for production to the `build` folder
 - `npm test` to run tests
-    - `npm run cy:run` to run Cypress tests (headlessly)
-    - `npm run cy:open` to run Cypress tests (with GUI)
+  - `npm run cy:run` to run Cypress tests (headlessly)
+  - `npm run cy:open` to run Cypress tests (with GUI)
 
 Cypress tests assume you have backend and frontend running.
 
-### Frontend file structure
+#### Frontend file structure
 
 ```
 cypress
@@ -54,19 +54,78 @@ src
 
 Our goal was a file structure which supports maintainability and where you can find functionality exactly where you expect to find it.
 
-- `components` contains components which have been extracted for easier read or are reused. 
-- `pages` contains components which are parents for a route. functions for the graphql- queries and -mutations. 
-- `types` contains the typescript typings. 
-- `utils` contains functions which are extracted for easier read or helper functions which are used multiple places. In `utils` we have the graphql strings we use to query and mutate data. 
+- `components` contains components which have been extracted for easier read or are reused.
+- `pages` contains components which are parents for a route. functions for the graphql- queries and -mutations.
+- `types` contains the typescript typings.
+- `utils` contains functions which are extracted for easier read or helper functions which are used multiple places. In `utils` we have the graphql strings we use to query and mutate data.
 - `App.tsx` is the root component. As for tests, cypress tests are in `/cypress` while the other tests are in `src/__tests__`.
 
-### 📈 GraphQL
+### 🌆 Backend
 
-For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's little setup, and what's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, which can make queries very fast. By default, the queries check the queries first, then the network.
+- `npm install` to install dependencies
+- `npm run dev` to run server using nodemon, automatically restarting server on file changes
+- `npm run lint` to run prettier and eslint checks
+
+#### Backend file structure
+
+```
+backend
+├───models
+├───resolvers
+├───schema
+├───app.ts
+└───index.ts
+```
+
+- `models` contains database schemas.
+- `resolvers` contains functions for the graphql- queries and -mutations.
+- `schema` contains the graphql types for queries, mutations and items.
+- `app.ts` exposes the `graphql`-endpoint.
+- `index.ts` starts up the application, including connecting to the database.
+
+## Feature requirements
+
+### 🔎 Searching and search result pagination
+
+<!-- TODO: How we did searching -->
 
 For pagination we [configured the cache](https://www.apollographql.com/docs/react/pagination/offset-based/#setting-keyargs-with-offsetlimitpagination), merging incoming data according to our key arguments. We also used the `fetchMore`-function from `useQuery` to call more items.
 
 There are many [different pagination strategies](https://www.apollographql.com/docs/react/pagination/overview/) a server can use. We thought offset was intuitive to use with mongodb and [suitable for this project](https://piazza.com/class/ksk8rtnewz56sh?cid=154), even though it can be less effective in [huge datasets](https://stackoverflow.com/questions/55744926/offset-pagination-vs-cursor-pagination).
+
+### 📑 Detail view of objects
+
+<!-- TODO: What happens when clicking into search results -->
+
+### 🗃 Sorting and filtering search
+
+<!-- TODO -->
+
+### ⌨ User generated data
+
+<!-- TODO  -->
+
+### 💁‍♀️ Accessibility
+
+<!-- TODO -->
+
+## Tech requirements
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### ⚖ State management using Redux
+
+<!-- TODO -->
+
+### 💾 Database
+
+#### MongoDB
+
+<!-- TODO: Write about everything Mongo -->
+
+#### GraphQL
+
+For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's little setup, and what's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, which can make queries very fast. By default, the queries check the queries first, then the network.
 
 ### 📚 Chakra UI
 
@@ -78,138 +137,7 @@ We have tested the application in multiple ways. Using [Jest](https://jestjs.io/
 
 We have used [Cypress](https://docs.cypress.io/) for end to end tests. These tests mimic user interaction, but are slower than unit and integration tests. We have tested the search input and the results, checking for input and expecting correct results.
 
-## 🌆 Backend
-
-- `npm install` to install dependencies
-- `npm run dev` to run server using nodemon, automatically restarting server on file changes
-- `npm run lint` to run prettier and eslint checks
-
-### 🛒 API
-
-#### pokemons
-
-Get all pokemons or query according to parameters.
-
-```
-query ($name: String, $sortDescending: Boolean, $type: String, $offset: Int) {
-    pokemons(name: $name, sortDescending: $sortDescending, type: $type, offset: $offset) {
-        \_id
-        name
-        description
-        types
-        weight
-        height
-        imageUrl
-        }
-    }
-```
-
-Example variables:  
-```
-{
-    "name": "Squirtle",
-    "sortDescending": true,
-    "type": "water",
-    "offset": 50
-}
-```
-
-Example results:
-
-```
-{
-  "data": {
-    "pokemons": [
-      {
-        "_id": "61696225bb286c8ea6f6f114",
-        "name": "Squirtle",
-        "description": "Aquaaa",
-        "types": ["water"],
-        "weight": 50,
-        "height": 60,
-        "imageUrl": "www.randomimageurl123123123123.no"
-      }
-    ]
-  }
-}
-```
-
-#### createPokemon
-
-Add a pokemon to the database.
-
-```
-mutation($name: String!, $description: String!, $types: [String!] !, $weight: Int!, $height: Int!, $imageUrl: String!) {
-  createPokemon(pokemonInput: {
-    name: $name,
-    description: $description,
-    types: $types,
-    weight: $weight,
-    height: $height,
-    imageUrl: $imageUrl
-  }) {
-    \
-    _id
-    name
-    description
-    types
-    weight
-    height
-    imageUrl
-  }
-}
-```
-
-Example variables:  
-```
-{
-    "name": "Squirtle",
-    "description": "Aqua",
-    "types": ["water"],
-    "weight": 50,
-    "height": 60,
-    "imageUrl": "www.randomimageurl123123123.no"
-}
-```
-
-Example results:
-
-```
-{
-    "data": {
-        "createPokemon": {
-            "\_id": "61697b2e11edf8bc35808c47",
-            "name": "Squirtle",
-            "description": "Aqua",
-            "types": [
-                "water"
-            ],
-            "weight": 50,
-            "height": 60,
-            "imageUrl": "www.randomimageurl123123123.no"
-        }
-    }
-}
-```
-
-### Backend file structure
-
-```
-backend
-├───models
-├───resolvers
-├───schema
-├───app.ts
-└───index.ts
-```
-
-- `models` contains database schemas. 
-- `resolvers` contains functions for the graphql- queries and -mutations. 
-- `schema` contains the graphql types for queries, mutations and items. 
-- `app.ts` exposes the `graphql`- endpoint. 
-- `index.ts` starts up the application, including connecting to the database.
-
-## ⚗️ Code quality and Git
+### ⚗️ Code quality and Git
 
 We made use of the formatting tools [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) to ensure a common coding style and good code quality. These were enforced with a pipeline/GitLab CI on pull request and after merge. We also ran tests in the pipeline to make sure functionality was as expected.
 
