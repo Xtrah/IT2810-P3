@@ -21,8 +21,14 @@ export const GET_POKEMONS_LIMITED = gql`
     $name: String
     $sortDescending: Boolean
     $type: String
+    $offset: Int
   ) {
-    pokemons(name: $name, sortDescending: $sortDescending, type: $type) {
+    pokemons(
+      name: $name
+      sortDescending: $sortDescending
+      type: $type
+      offset: $offset
+    ) {
       _id
       name
       description

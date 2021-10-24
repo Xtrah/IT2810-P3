@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ChakraProvider } from '@chakra-ui/react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import Home from '../pages/Home';
+import SearchPage from '../pages/SearchPage';
 
 describe('<Home />', () => {
   it('search field reacts to user input', () => {
@@ -14,7 +14,7 @@ describe('<Home />', () => {
     const { getByPlaceholderText } = render(
       <ApolloProvider client={client}>
         <ChakraProvider>
-          <Home />
+          <SearchPage />
         </ChakraProvider>
       </ApolloProvider>
     );
