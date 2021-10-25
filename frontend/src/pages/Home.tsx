@@ -18,16 +18,32 @@ import { GET_POKEMONS_LIMITED } from "../utils/queries";
 import PokemonCard from "../components/PokemonCard";
 import { Pokemon } from "../types/pokemon";
 import TypeSelect from "../components/TypeSelect";
+import { GET_POKEMON_FILTER } from "../utils/queries";
+import { pokemonFilterVar } from "../cache";
+import { setPokemonFilter } from "../utils/updateFilter";
 
 // Home is the home page component, containing search and search results
 function Home() {
   const [searchText, setSearchText] = useState("");
-  const [selectedFilterType, setSelectedFilterType] = useState("");
+  const { data: pokemonFilter } = useQuery(GET_POKEMON_FILTER);
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
-    variables: { name: searchText, type: selectedFilterType }, // Queries when search text changes
+    variables: { name: searchText, type: pokemonFilterVar().type }, // Queries when search text changes
   });
 
+  console.log(pokemonFilter.type);
+  console.log(pokemonFilterVar());
+
+  // temporary
+  let sortDescending = false;
+
   const { isOpen, onToggle } = useDisclosure();
+
+  const handleFilterChange = (type: string) => {
+    setPokemonFilter({
+      type,
+      sortDescending,
+    });
+  };
 
   // Returns UI according to status of data
   const dataResult = () => {
@@ -76,7 +92,7 @@ function Home() {
           rounded="md"
           shadow="md"
         >
-          <TypeSelect setSelectedType={setSelectedFilterType}/>
+          <TypeSelect handleFilterChange={handleFilterChange} />
         </Box>
       </Collapse>
       {dataResult()}
