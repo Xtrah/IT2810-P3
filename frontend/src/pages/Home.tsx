@@ -1,14 +1,13 @@
 import {
   Alert,
   AlertIcon,
-  Button,
   Container,
   Input,
-  InputGroup,
-  InputRightElement,
   Collapse,
   Box,
   useDisclosure,
+  IconButton,
+  HStack,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
 import { SettingsIcon } from "@chakra-ui/icons";
@@ -68,7 +67,7 @@ function Home() {
 
   return (
     <Container>
-      <InputGroup size="md">
+      <HStack spacing={2}>
         <Input
           value={searchText}
           pr="4rem"
@@ -76,13 +75,13 @@ function Home() {
           placeholder="Enter pokemon name"
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Button onClick={onToggle}>
-          Filter
-          <SettingsIcon />
-        </Button>
-        <InputRightElement width="2.5rem"></InputRightElement>
-      </InputGroup>
-
+        <IconButton
+          onClick={onToggle}
+          aria-label="Search database"
+          colorScheme="red"
+          icon={<SettingsIcon />}
+        />
+      </HStack>
       <Collapse in={isOpen} animateOpacity>
         <Box
           p="40px"
