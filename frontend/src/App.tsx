@@ -1,11 +1,12 @@
-import { ChakraProvider, Box } from '@chakra-ui/react';
-import Home from './pages/Home';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ChakraProvider, Box } from "@chakra-ui/react";
+import Home from "./pages/Home";
+import { ApolloProvider, ApolloClient } from "@apollo/client";
+import { cache } from "./cache";
 
 const App = () => {
   const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql',
-    cache: new InMemoryCache(),
+    uri: "http://localhost:4000/graphql",
+    cache,
   });
 
   return (

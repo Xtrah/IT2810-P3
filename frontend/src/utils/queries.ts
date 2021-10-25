@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Get pokemons with all fields
 export const GET_POKEMONS = gql`
@@ -28,6 +28,15 @@ export const GET_POKEMONS_LIMITED = gql`
       description
       types
       imageUrl
+    }
+  }
+`;
+
+export const GET_POKEMON_FILTER = gql`
+  query GetPokemonFilter {
+    pokemonFilter @client {
+      type
+      sortDescending
     }
   }
 `;
