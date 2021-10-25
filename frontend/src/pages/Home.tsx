@@ -8,6 +8,8 @@ import {
   useDisclosure,
   IconButton,
   HStack,
+  Select,
+  Text,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
 import { SettingsIcon } from "@chakra-ui/icons";
@@ -84,7 +86,7 @@ function Home() {
       </HStack>
       <Collapse in={isOpen} animateOpacity>
         <Box
-          p="40px"
+          p="20px"
           mt="4"
           border="2px"
           borderColor="red"
@@ -92,6 +94,18 @@ function Home() {
           shadow="md"
         >
           <TypeSelect handleFilterChange={handleFilterChange} />
+          <HStack>
+            <Box minW="125px" p={4}>
+              <Text fontWeight="500" fontSize="md">
+                Sort names:
+              </Text>
+            </Box>
+
+            <Select bg="var(--chakra-colors-red-500);" color="white">
+              <option value="false">Ascending</option>
+              <option value="true">Descending</option>
+            </Select>
+          </HStack>
         </Box>
       </Collapse>
       {dataResult()}
