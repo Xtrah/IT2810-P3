@@ -37,7 +37,7 @@ const App = () => {
                 <PokemonPage />
               </Route>
               <Route path="/create">
-                <CreatePokemon/>
+                <CreatePokemon />
               </Route>
             </Switch>
           </Router>

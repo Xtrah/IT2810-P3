@@ -26,7 +26,8 @@ const PokemonCard = ({ pokemon }: Props) => (
       <Box mr={5}>
         <Text color="white">
           {pokemon.name}
-          {pokemon.types.map((type) => <Image
+          {pokemon.types.map((type) => (
+            <Image
               key={type}
               ml={2}
               display="inline"
@@ -34,8 +35,9 @@ const PokemonCard = ({ pokemon }: Props) => (
               boxSize="20px"
               objectFit="cover"
               src={getIconByType(type)}
-              alt={pokemon.name}/>)
-            }
+              alt={pokemon.name}
+            />
+          ))}
         </Text>
       </Box>
       <Image
