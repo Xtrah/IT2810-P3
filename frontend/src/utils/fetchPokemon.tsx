@@ -44,7 +44,7 @@ export const fetchPokemon = async () => {
         let pokemon: FilteredPokemon = {
           name: res.name,
           types: res.types.map((type) => type.type.name),
-          description: "",
+          description: '',
           height: res.height,
           weight: res.weight,
           imageUrl: res.sprites.front_default,
