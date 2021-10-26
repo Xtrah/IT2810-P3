@@ -5,13 +5,11 @@ interface Props {
   handleFilterChange: (event: string) => void;
 }
 
-// TypeSelect is used as selector of possible types
+// TypeSelect is a select-input for filtering pokemon according to pokemon types.
 const TypeSelect = ({ handleFilterChange }: Props) => {
   const [pokemonType, setPokemonType] = useState("");
 
-  // handlesubmit
-  // - onchange innad typeselect
-  // - kall til handlesubmit hvor det leveres den endrede dropdownchangen
+  // Update input and update cache
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setPokemonType(e.target.value);
     handleFilterChange(e.target.value);
@@ -35,6 +33,7 @@ const TypeSelect = ({ handleFilterChange }: Props) => {
         <option value="fire">Fire</option>
         <option value="water">Water</option>
         <option value="grass">Grass</option>
+        <option value="electric">Electric</option>
         <option value="ice">Ice</option>
         <option value="fighting">Fighting</option>
         <option value="poison">Poison</option>

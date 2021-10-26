@@ -15,11 +15,10 @@ import { Spinner } from "@chakra-ui/react";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_POKEMONS_LIMITED } from "../utils/queries";
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from "../utils/queries";
 import PokemonCard from "../components/PokemonCard";
 import { Pokemon } from "../types/pokemon";
 import TypeSelect from "../components/TypeSelect";
-import { GET_POKEMON_FILTER } from "../utils/queries";
 import { pokemonFilterVar } from "../cache";
 import { setPokemonFilter } from "../utils/updateFilter";
 
@@ -27,17 +26,26 @@ import { setPokemonFilter } from "../utils/updateFilter";
 function Home() {
   const [searchText, setSearchText] = useState("");
   const { data: pokemonFilter } = useQuery(GET_POKEMON_FILTER);
+  const [pokemonSort, setPokemonSort] = useState("");
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
-    variables: { name: searchText, type: pokemonFilterVar().type }, // Queries when search text changes
+    variables: {
+      name: searchText,
+      sortDescending: pokemonFilterVar().sortDescending,
+      type: pokemonFilterVar().type,
+    }, // Queries when search text changes
   });
 
-  console.log(pokemonFilter.type);
-  console.log(pokemonFilterVar());
-
   // temporary
-  let sortDescending = false;
 
   const { isOpen, onToggle } = useDisclosure();
+
+  let sortDescending = pokemonSort === "false";
+  console.log(sortDescending);
+
+  function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setPokemonSort(e.target.value);
+    handleFilterChange(pokemonFilterVar().type);
+  }
 
   const handleFilterChange = (type: string) => {
     setPokemonFilter({
@@ -101,7 +109,12 @@ function Home() {
               </Text>
             </Box>
 
-            <Select bg="var(--chakra-colors-red-500);" color="white">
+            <Select
+              bg="var(--chakra-colors-red-500);"
+              color="white"
+              value={pokemonSort}
+              onChange={handleSortChange}
+            >
               <option value="false">Ascending</option>
               <option value="true">Descending</option>
             </Select>
