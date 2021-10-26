@@ -1,7 +1,7 @@
 import { Box, Center, Text, Image, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { PokemonLimited } from '../types/pokemon';
-import { getGradientByType } from '../utils/getGradientByType';
+import getGradientByType from '../utils/getGradientByType';
 import getIconByType from '../utils/getIconByType';
 
 interface Props {

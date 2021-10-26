@@ -1,11 +1,11 @@
-/* eslint-disable import/prefer-default-export */
+// Code inspired by a group member's earlier code https://github.com/LiviaValenti/gjensidige-case/blob/main/src/utils.ts
 
 /**
  * Returns gradient-values based on Pokémon-type
  * @param type string depicting Pokémon-type
  * @returns gradient values on format (gradient-angle, hex1 colorstop1, hex1 colorstop2)
  */
-export const getGradientByType = (type: string) => {
+const getGradientByType = (type: string) => {
   const sizeLeft: number = 20;
   const sizeRight: number = 80;
   const gradientMap = new Map([
@@ -33,3 +33,5 @@ export const getGradientByType = (type: string) => {
     ? `linear(to-tl, ${gradientMap.get(type)})`
     : `linear(to-tl, #252525 ${sizeLeft}%, #666666 ${sizeRight}%)`;
 };
+
+export default getGradientByType;
