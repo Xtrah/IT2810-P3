@@ -14,7 +14,8 @@ First start the backend.
 
 ```
 cd backend
-npm install && npm run dev
+npm install
+npm run dev
 ```
 
 Then start the frontend in another terminal.
@@ -22,7 +23,8 @@ Then start the frontend in another terminal.
 ```
 cd ..
 cd frontend
-npm install && npm start
+npm install
+npm start
 ```
 
 ### 🏙 Frontend
@@ -33,8 +35,8 @@ npm install && npm start
 - `npm run lint` to run prettier and eslint checks
 - `npm build` to minify and build for production to the `build` folder
 - `npm test` to run tests
-  - `npm run cy:run` to run Cypress tests (headlessly)
-  - `npm run cy:open` to run Cypress tests (with GUI)
+- `npm run cy:run` to run Cypress tests (headlessly)
+- `npm run cy:open` to run Cypress tests (with GUI)
 
 Cypress tests assume you have backend and frontend running.
 
@@ -85,9 +87,11 @@ backend
 
 ## Feature requirements
 
-### 🔎 Searching and search result pagination
+### 🔎 Search
 
-<!-- TODO: How we did searching -->
+A user can search for pokemon on SearchPage. On the client, useQuery is called on input. It will query cache first, then check network. On the backend, a query on name is run on the database, returning a list of the results.
+
+### 📜 Search result pagination
 
 For pagination we [configured the cache](https://www.apollographql.com/docs/react/pagination/offset-based/#setting-keyargs-with-offsetlimitpagination), merging incoming data according to our key arguments. We also used the `fetchMore`-function from `useQuery` to call more items.
 
@@ -95,7 +99,7 @@ There are many [different pagination strategies](https://www.apollographql.com/d
 
 ### 📑 Detail view of objects
 
-<!-- TODO: What happens when clicking into search results -->
+From search results, one can click into details of a pokemon. This does a new query encompassing more fields of the object. Detail view can be done in a multiple ways. We chose to do a new query in detail page instead of filtering on the client. This entailed making another endpoint for fetching a single pokemon by id. We found this suitable, as it allows a user to access a detail page without having first enter the main page.
 
 ### 🗃 Sorting and filtering search
 
@@ -107,7 +111,11 @@ There are many [different pagination strategies](https://www.apollographql.com/d
 
 ### 💁‍♀️ Accessibility
 
-<!-- TODO -->
+<!-- TODO: Write about other accessibility concerns -->
+
+#### 📚 Chakra UI
+
+We wanted a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses props so it's easy to customize and intuitive to use.
 
 ## Tech requirements
 
@@ -126,10 +134,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 #### GraphQL
 
 For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's little setup, and what's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, which can make queries very fast. By default, the queries check the queries first, then the network.
-
-### 📚 Chakra UI
-
-We wanted a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses props so it's easy to customize and intuitive to use.
 
 ### 🧪 Tests using Jest and Cypress
 

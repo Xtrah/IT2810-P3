@@ -1,7 +1,10 @@
-import { ChakraProvider, Box } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SearchPage from './pages/SearchPage';
+import PokemonPage from './pages/PokemonPage';
+import Nav from './components/Nav';
 
 const App = () => {
   const client = new ApolloClient({
@@ -23,9 +26,17 @@ const App = () => {
     <div>
       <ChakraProvider>
         <ApolloProvider client={client}>
-          {/* TODO: Nav should contain navigation */}
-          <Box p={2}>Nav</Box>
-          <SearchPage />
+          <Router>
+            <Nav />
+            <Switch>
+              <Route path="/" exact>
+                <SearchPage />
+              </Route>
+              <Route path="/pokemon/:id">
+                <PokemonPage />
+              </Route>
+            </Switch>
+          </Router>
         </ApolloProvider>
       </ChakraProvider>
     </div>

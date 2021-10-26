@@ -1,5 +1,20 @@
 import { gql } from '@apollo/client';
 
+// Get pokemon with all fields
+export const GET_POKEMON = gql`
+  query ($_id: String) {
+    pokemon(_id: $_id) {
+      _id
+      name
+      description
+      types
+      weight
+      height
+      imageUrl
+    }
+  }
+`;
+
 // Get pokemons with all fields
 export const GET_POKEMONS = gql`
   query ($name: String, $sortDescending: Boolean, $type: String) {

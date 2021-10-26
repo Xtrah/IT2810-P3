@@ -9,6 +9,18 @@ interface QueryOptions {
 
 const pokemonResolver = {
   /*
+    Return one pokemon according to id
+  */
+  pokemon: async (args: { _id: string }) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const pokemon = await Pokemon.findById(args._id).exec();
+      return pokemon;
+    } catch (err) {
+      throw err;
+    }
+  },
+  /*
     Return all pokemons or query name or type.
     Sort alphabetically on name by default. Can sort descending.
   */

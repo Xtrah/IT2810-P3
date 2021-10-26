@@ -1,5 +1,25 @@
 # 🛒 API
 
+## pokemon
+
+Get pokemon by id.
+
+```
+
+query($_id: String) {
+  pokemon(_id: $_id) {
+    _id
+    name
+    description
+    types
+    weight
+    height
+    imageUrl
+  }
+}
+
+```
+
 ## pokemons
 
 Get all pokemons or query according to parameters.
