@@ -1,4 +1,4 @@
-import { InMemoryCache, makeVar } from "@apollo/client";
+import { InMemoryCache, makeVar } from '@apollo/client';
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -19,7 +19,14 @@ export interface PokemonFilter {
   sortDescending: boolean;
 }
 
+/**
+ * PokemonFilterVar handles the filter variables.
+ *
+ * It allows for saving and retireval of filter states in the cache.
+ */
 export const pokemonFilterVar = makeVar<PokemonFilter>({
-  type: "",
+  type: '',
   sortDescending: false,
 });
+
+// Here we set the initial values for the filter.
