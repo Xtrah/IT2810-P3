@@ -8,39 +8,51 @@ import {
   Image,
   Flex,
   FormErrorMessage,
-  Menu,
-  MenuList,
-  MenuButton,
-  MenuItemOption,
-  MenuOptionGroup,
-} from "@chakra-ui/react";
-import { CheckIcon, ChevronDownIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+  Select,
+} from '@chakra-ui/react';
+import { CheckIcon, PlusSquareIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_POKEMON } from "../utils/queries";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { pokemonTypes } from "../utils/pokemonTypes";
-
+import { CREATE_POKEMON } from '../utils/queries';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { pokemonTypes } from '../utils/pokemonTypes';
+import { useHistory } from 'react-router';
 
 type Inputs = {
-  name: string,
-  description: string,
-  types: string[],
-  height: number,
-  weight: number,
-  imageUrl: string,
+  name: string;
+  description: string;
+  primaryType: string;
+  secondaryType: string;
+  height: number;
+  weight: number;
+  imageUrl: string;
 };
 
 // CreatePokemon is the page component for creating new pokemons
 function CreatePokemon() {
-  const [imageUrl, setImageUrl] = useState("Test");
-  const [createPokemon] = useMutation(CREATE_POKEMON);
-  const [types, setTypes] = useState<string[]>([]);
+  const [imageUrl, setImageUrl] = useState('Test');
+  const [createPokemon, {data}] = useMutation(CREATE_POKEMON);
+  const [primaryType, setPrimaryType] = useState<string>('');
+  const [secondaryType, setSecondaryType] = useState<string>('');
+  let history = useHistory();
 
-  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) =>{
-    createPokemon({ variables: { ...data, types: types } })
-    // TODO: Redirect
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (submitData) => {
+    createPokemon({
+      variables: {
+        ...submitData,
+        types: !secondaryType.length
+          ? [primaryType]
+          : secondaryType === primaryType
+          ? [primaryType]
+          : [primaryType, secondaryType],
+      },
+    })
+      // TODO: Redirect
   };
 
   return (
@@ -55,9 +67,9 @@ function CreatePokemon() {
             type="text"
             placeholder="Enter pokemon name"
             borderColor="red.500"
-            {...register("name", {
-              required: "This is required",
-              minLength: { value: 3, message: "Minimum length should be 3" },
+            {...register('name', {
+              required: 'This is required',
+              minLength: { value: 3, message: 'Minimum length should be 3' },
             })}
           />
           <FormErrorMessage>
@@ -75,10 +87,10 @@ function CreatePokemon() {
               type="number"
               placeholder="123"
               borderColor="red.500"
-              {...register("height", {
-                required: "This is required",
+              {...register('height', {
+                required: 'This is required',
                 valueAsNumber: true,
-                min: { value: 1, message: "Height must be at least 1" },
+                min: { value: 1, message: 'Height must be at least 1' },
               })}
             />
             <FormErrorMessage>
@@ -94,10 +106,10 @@ function CreatePokemon() {
               type="number"
               placeholder="123"
               borderColor="red.500"
-              {...register("weight", {
-                required: "This is required",
+              {...register('weight', {
+                required: 'This is required',
                 valueAsNumber: true,
-                min: { value: 1, message: "Weight must be at least 1" },
+                min: { value: 1, message: 'Weight must be at least 1' },
               })}
             ></Input>
             <FormErrorMessage>
@@ -105,44 +117,63 @@ function CreatePokemon() {
             </FormErrorMessage>
           </FormControl>
         </Flex>
-        <FormControl mt="10px" isInvalid={errors.name? true : false}>
-          <Menu closeOnSelect={false}>
-            <MenuButton bgColor="red.500" color="white" as={Button} w="100%">
-              Select types <ChevronDownIcon w="25px" h="25px" />
-            </MenuButton>
-            <MenuList w="100%">
-              <MenuOptionGroup
-                title="Type"
-                type="checkbox"
-                w="100%"
-                id="types"
-                aria-required
-                aria-label="Weight input"
-                {...register("types", {
-                  required: "This is required",
-                  onChange: e => console.log(e)
-                })}
-              >
-                {pokemonTypes.map((type) => (
-                  <MenuItemOption value={type}>{type}</MenuItemOption>
-                ))}
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu>
+        <FormControl mt="10px" isInvalid={errors.primaryType ? true : false}>
+          <FormLabel>Primary type</FormLabel>
+          <Select
+            placeholder="Select primary type"
+            id="primaryType"
+            aria-required
+            aria-label="Primary type select"
+            borderColor="red.500"
+            {...register('primaryType', {
+              required: 'This is required',
+              onChange: (e) => setPrimaryType(e.target.value),
+            })}
+          >
+            {pokemonTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
+          <FormErrorMessage>
+            {errors.primaryType && errors.primaryType.message}
+          </FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.description ? true : false}>
+        <FormControl mt="10px" isInvalid={errors.secondaryType ? true : false}>
+          <FormLabel>Secondary type (optional)</FormLabel>
+          <Select
+            placeholder="Select secondary type"
+            id="secondaryType"
+            aria-label="Secondary type select"
+            borderColor="red.500"
+            {...register('secondaryType', {
+              onChange: (e) => setSecondaryType(e.target.value),
+            })}
+          >
+            {pokemonTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
+          <FormErrorMessage>
+            {errors.secondaryType && errors.secondaryType.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl mt="10px" isInvalid={errors.description ? true : false}>
           <FormLabel>Description</FormLabel>
           <Textarea
             id="description"
             aria-label="Description of pokemon input"
             placeholder="Description of pokemon"
             borderColor="red.500"
-            {...register("description", {
-              required: "This is required",
+            {...register('description', {
+              required: 'This is required',
             })}
           />
         </FormControl>
-        <FormControl isInvalid={errors.imageUrl ? true : false}>
+        <FormControl mt="10px" isInvalid={errors.imageUrl ? true : false}>
           <FormLabel>Image Url</FormLabel>
           <Input
             id="imageUrl"
@@ -151,27 +182,28 @@ function CreatePokemon() {
             type="text"
             placeholder="Enter url for image of pokemon"
             borderColor="red.500"
-            {...register("imageUrl", {
+            {...register('imageUrl', {
               onChange: (e) => setImageUrl(e.target.value),
-              required: "This is required",
+              required: 'This is required',
             })}
           />
           <FormErrorMessage>
             {errors.imageUrl && errors.imageUrl.message}
           </FormErrorMessage>
         </FormControl>
+        <FormLabel mt="10px">Image preview</FormLabel>
         <Image
           boxSize="260px"
           objectFit="contain"
           placeholder=""
           border="1px"
-          mt="10px"
           borderRadius="5px"
           fallbackSrc="ImageNotFound.svg"
-          src={imageUrl ? imageUrl : "ImageNotFound.svg"}
+          src={imageUrl ? imageUrl : 'ImageNotFound.svg'}
           alt="Pokemon"
           borderColor="red.500"
           w="100%"
+          maxHeight="250px"
           mb="10px"
         />
         <Button
