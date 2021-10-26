@@ -26,15 +26,16 @@ const PokemonCard = ({ pokemon }: Props) => (
       <Box mr={5}>
         <Text color="white">
           {pokemon.name}
-          <Image
-            ml={2}
-            display="inline"
-            borderRadius="xl"
-            boxSize="20px"
-            objectFit="cover"
-            src={getIconByType(pokemon.types[0])}
-            alt={pokemon.name}
-          />
+          {pokemon.types.map((type) => <Image
+              key={type}
+              ml={2}
+              display="inline"
+              borderRadius="xl"
+              boxSize="20px"
+              objectFit="cover"
+              src={getIconByType(type)}
+              alt={pokemon.name}/>)
+            }
         </Text>
       </Box>
       <Image
