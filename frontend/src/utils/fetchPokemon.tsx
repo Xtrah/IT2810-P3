@@ -7,6 +7,7 @@ interface APIPokemon {
 }
 
 interface Sprites {
+  // eslint-disable-next-line camelcase
   front_default: string;
 }
 
@@ -33,21 +34,21 @@ interface FilteredPokemon {
   imageUrl: string;
 }
 
-export const fetchPokemon = async () => {
-  let pokemonData: FilteredPokemon[] = [];
+const fetchPokemon = async () => {
+  const pokemonData: FilteredPokemon[] = [];
   const fromPokemon = 1;
   const lastPokemon = 151;
-  for (let pokemonId = fromPokemon; pokemonId <= lastPokemon; pokemonId++) {
+  for (let pokemonId = fromPokemon; pokemonId <= lastPokemon; pokemonId += 1) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
       .then<APIPokemon>((res) => res.json())
-      .then((res) => {
-        let pokemon: FilteredPokemon = {
-          name: res.name,
-          types: res.types.map((type) => type.type.name),
+      .then((pokemonRes) => {
+        const pokemon: FilteredPokemon = {
+          name: pokemonRes.name,
+          types: pokemonRes.types.map((type) => type.type.name),
           description: '',
-          height: res.height,
-          weight: res.weight,
-          imageUrl: res.sprites.front_default,
+          height: pokemonRes.height,
+          weight: pokemonRes.weight,
+          imageUrl: pokemonRes.sprites.front_default,
         };
         fetch(`https://pokeapi.co/api/v2/characteristic/${pokemonId}/`)
           .then<APICharacteristics>((res) => res.json())
@@ -60,3 +61,5 @@ export const fetchPokemon = async () => {
   }
   return pokemonData;
 };
+
+export default fetchPokemon;
