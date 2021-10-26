@@ -4,12 +4,9 @@ import {
   Container,
   Input,
   Collapse,
-  Box,
   useDisclosure,
   IconButton,
   HStack,
-  Select,
-  Text,
 } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 import { SettingsIcon } from '@chakra-ui/icons';
@@ -18,15 +15,13 @@ import { useQuery } from '@apollo/client';
 import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
 import PokemonCard from '../components/PokemonCard';
 import { Pokemon } from '../types/pokemon';
-import TypeSelect from '../components/TypeSelect';
 import { pokemonFilterVar } from '../types/cache';
-import { setPokemonFilter } from '../utils/setPokemonFilter';
+import PokemonFilter from '../components/PokemonFilter';
 
 // Home is the home page component, containing search and search results
 function Home() {
   const [searchText, setSearchText] = useState('');
   const { data: pokemonFilter } = useQuery(GET_POKEMON_FILTER);
-  const [pokemonSort, setPokemonSort] = useState('');
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
     variables: {
       name: searchText,
@@ -38,21 +33,6 @@ function Home() {
   // temporary
 
   const { isOpen, onToggle } = useDisclosure();
-
-  let sortDescending = pokemonSort === 'false';
-  console.log(sortDescending);
-
-  function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setPokemonSort(e.target.value);
-    handleFilterChange(pokemonFilterVar().type);
-  }
-
-  const handleFilterChange = (type: string) => {
-    setPokemonFilter({
-      type,
-      sortDescending,
-    });
-  };
 
   // Returns UI according to status of data
   const dataResult = () => {
@@ -93,33 +73,7 @@ function Home() {
         />
       </HStack>
       <Collapse in={isOpen} animateOpacity>
-        <Box
-          p="20px"
-          mt="4"
-          border="2px"
-          borderColor="red"
-          rounded="md"
-          shadow="md"
-        >
-          <TypeSelect handleFilterChange={handleFilterChange} />
-          <HStack>
-            <Box minW="125px" p={4}>
-              <Text fontWeight="500" fontSize="md">
-                Sort names:
-              </Text>
-            </Box>
-
-            <Select
-              bg="var(--chakra-colors-red-500);"
-              color="white"
-              value={pokemonSort}
-              onChange={handleSortChange}
-            >
-              <option value="false">Ascending</option>
-              <option value="true">Descending</option>
-            </Select>
-          </HStack>
-        </Box>
+        <PokemonFilter />
       </Collapse>
       {dataResult()}
     </Container>
