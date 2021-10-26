@@ -16,7 +16,7 @@ import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
 import PokemonCard from '../components/PokemonCard';
 import { Pokemon } from '../types/pokemon';
 import { pokemonFilterVar } from '../types/cache';
-import PokemonFilter from '../components/PokemonFilter';
+import PokemonFilter from '../components/SearchFilter';
 
 // Home is the home page component, containing search and search results
 function Home() {
