@@ -20,7 +20,7 @@ import PokemonCard from '../components/PokemonCard';
 import { Pokemon } from '../types/pokemon';
 import TypeSelect from '../components/TypeSelect';
 import { pokemonFilterVar } from '../cache';
-import { setPokemonFilter } from '../utils/updateFilter';
+import { setPokemonFilter } from '../utils/setPokemonFilter';
 
 // Home is the home page component, containing search and search results
 function Home() {
