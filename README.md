@@ -129,11 +129,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 #### MongoDB
 
-<!-- TODO: Write about everything Mongo -->
+[MongoDB](https://www.mongodb.com/why-use-mongodb) is a document database. Document databases uses a JSON-like format to store objects, similar to native objects in objects in Javascript, making it intuitive to use. Working with mongodb, there are [multiple choices](https://www.mongodb.com/developer/article/mongoose-versus-nodejs-driver/). Either speaking to the database directly or using libraries such as [mongoose](https://mongoosejs.com/docs/) on top. To communicate with mongodb, we chose [mongoose](https://mongoosejs.com/docs/). We chose mongoose, as it adds an [abstraction](https://stackoverflow.com/questions/18531696/why-do-we-need-what-advantages-to-use-mongoose). Schemas help structure data, and models can be easier to work with than pure data.
 
 #### GraphQL
 
-For use of GraphQL on the client side we chose [Apollo client](https://www.apollographql.com/docs/react/why-apollo/). It's little setup, and what's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, which can make queries very fast. By default, the queries check the queries first, then the network.
+We used [GraphQL](https://graphql.org/) in the backend. We defined resolvers using GraphQL-schemas to define what was expected input and output. The resolvers also interacted with mongodb through mongoose accordingly. The backend also had to expose endpoint, so the client could communicate with the backend. We used [Express](https://expressjs.com/) on a [node](https://nodejs.org/en/) server. We used express, as it simplifies multiple node functions, writing less code for [more functionality](https://www.geeksforgeeks.org/node-js-vs-express-js/).
+
+On the client side, we used [Apollo client](https://www.apollographql.com/docs/react/why-apollo/) to communicate with GraphQL. It's little setup, and what's especially useful is the useQuery-hook they offer. It's intuitive sending in queries with variables, and the handling of errors and loading lets you use little code for a lot of functionality. It has great documentation and it's popular, making it easy to learn and use in smart ways. It also comes with cache, which can make queries very fast. By default, the queries check the queries first, then the network.
 
 ### 🧪 Tests using Jest and Cypress
 
