@@ -10,23 +10,23 @@ import {
   HStack,
   Select,
   Text,
-} from "@chakra-ui/react";
-import { Spinner } from "@chakra-ui/react";
-import { SettingsIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from "../utils/queries";
-import PokemonCard from "../components/PokemonCard";
-import { Pokemon } from "../types/pokemon";
-import TypeSelect from "../components/TypeSelect";
-import { pokemonFilterVar } from "../cache";
-import { setPokemonFilter } from "../utils/updateFilter";
+} from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
+import { SettingsIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
+import PokemonCard from '../components/PokemonCard';
+import { Pokemon } from '../types/pokemon';
+import TypeSelect from '../components/TypeSelect';
+import { pokemonFilterVar } from '../cache';
+import { setPokemonFilter } from '../utils/updateFilter';
 
 // Home is the home page component, containing search and search results
 function Home() {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const { data: pokemonFilter } = useQuery(GET_POKEMON_FILTER);
-  const [pokemonSort, setPokemonSort] = useState("");
+  const [pokemonSort, setPokemonSort] = useState('');
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
     variables: {
       name: searchText,
@@ -39,7 +39,7 @@ function Home() {
 
   const { isOpen, onToggle } = useDisclosure();
 
-  let sortDescending = pokemonSort === "false";
+  let sortDescending = pokemonSort === 'false';
   console.log(sortDescending);
 
   function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
