@@ -16,10 +16,12 @@ import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
 import PokemonCard from '../components/PokemonCard';
 import { Pokemon } from '../types/pokemon';
 import { pokemonFilterVar } from '../types/cache';
-import PokemonFilter from '../components/SearchFilter';
+import SearchFilter from '../components/SearchFilter';
 
 // Home is the home page component, containing search and search results
 function Home() {
+  const { isOpen, onToggle } = useDisclosure();
+
   const [searchText, setSearchText] = useState('');
   const { data: pokemonFilter } = useQuery(GET_POKEMON_FILTER);
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
@@ -31,8 +33,6 @@ function Home() {
   });
 
   // temporary
-
-  const { isOpen, onToggle } = useDisclosure();
 
   // Returns UI according to status of data
   const dataResult = () => {
@@ -72,9 +72,9 @@ function Home() {
           icon={<SettingsIcon />}
         />
       </HStack>
-      <Collapse in={isOpen} animateOpacity>
-        <PokemonFilter />
-      </Collapse>
+
+      <SearchFilter isOpen={isOpen} />
+
       {dataResult()}
     </Container>
   );
