@@ -111,7 +111,7 @@ From search results, one can click into details of a pokemon. This does a new qu
 
 ### 💁‍♀️ Accessibility
 
-In accessibility there are 4 principles for webcontent. It should be perceivable, operable, understandable and robust. These princibles affected our choice of library for designing the application. We wanted a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses props so it's easy to customize and intuitive to use.
+In accessibility there are 4 principles for webcontent. It should be operable, perceivable, understandable and robust. These princibles affected our choice of library for designing the application. We wanted a component library as it speeds up development giving good looking design fast. We chose [Chakra UI](https://chakra-ui.com/) for its built in accessibility. It's also easy to set up, uses props so it's easy to customize and intuitive to use.
 
 Chakra offers **operability** out of the box. All our functionality is available using the keyboard. This is tested using 'tab'-key and 'enter' to navigate through functionality. The page is also navigable. On each page, we have a navbar allowing a user to navigate back to the home page. The navbar also has a text explaining what the page does. In addition to the navbar, there's a back-button for getting back to the home page.
 
@@ -119,7 +119,7 @@ We have made the page **perceivable** by designing a layout which has contrast a
 
 We have made the page **understandable** by giving feedback on actions. Hovering a pokemoncard changes the opacity, giving the user a hint of interaction. On data fetching, we have a loading icon and on error we give an error message.
 
-We have made the page **robust** by testing the page on different web browsers, i.e. Google chrome and Microsoft Edge. As these did not show any deficits, it's a sign our choice of technology supports different user agents, being robust.
+We have made the page **robust** by testing the page on different web browsers. We tested the chromium based browsers Google chrome and Microsoft edge, and the non-chromium based browser Firefox. As these did not show any deficits, it's a sign our choice of technology supports different user agents, being robust.
 
 ## Tech requirements
 
