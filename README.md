@@ -103,7 +103,7 @@ From search results, one can click into details of a pokemon. This does a new qu
 
 ### 🗃 Sorting and filtering search
 
-<!-- TODO -->
+A user can sort on name and filter on pokemon types. These are inputs which are toggled using the cog-icon. Sort and filter are variables the result query is dependent on. The GraphQL query supports these variables. In the backend the resolver handles the variables, updating the find-argument to filter on pokemon types and the sort will order the results. If a user does not set the variables, there will be no filtering on type and sort on name is ascending.
 
 ### ⌨ User generated data
 
@@ -125,9 +125,13 @@ We have made the page **robust** by testing the page on different web browsers. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### ⚖ State management using Redux
+### ⚖ Global state management
 
-<!-- TODO -->
+In applications where multiple components need the same state, global state can be a solution to share the state in a good way. Specifically, instead of prop drilling to access the relevant states, global state may be accessed with a simple function, potentially making the code more readable. In this application we found it most appropriate to demonstrate global state management on the search filter. In our use, a user can filter a pokemon, click into detail view of a pokemon, then go back to the search results, and the filter is persisted.
+
+Global state can be implemented in a [number of ways](https://medium.com/extra-credit-by-guild/using-apollos-local-cache-for-global-state-management-with-react-typescript-codegen-and-remote-edb3c8cfbd90). Two popular choices may be redux and mobX. We decided to not choose any of those, but instead go with apollo client. Having the filter values in global state, the queries dependent on those values will automatically update. We also avoid adding another library with its boilerplate code, making our solution arguably less complex and more readable.
+
+Using apollo client, global state can be done by defining a variable on the [cache configuration](https://www.apollographql.com/docs/react/local-state/managing-state-with-field-policies/). These variables are client-only. In the cache, a so called `reactive variable` is defined, defining initial values and returning a function. The function is used for getting the variables, our global state, and also updating it. If a query depends on a reactive variable, the field automatically refreshes. This made sticking to apollo client a good choice for us.
 
 ### 💾 Database
 
