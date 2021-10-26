@@ -1,4 +1,4 @@
-export const pokemonTypes = [
+const pokemonTypes = [
   "normal",
   "fire",
   "water",
@@ -18,3 +18,5 @@ export const pokemonTypes = [
   "steel",
   "fairy",
 ];
+
+export default pokemonTypes

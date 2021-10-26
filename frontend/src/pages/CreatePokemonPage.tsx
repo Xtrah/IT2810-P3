@@ -13,10 +13,9 @@ import {
 import { CheckIcon, PlusSquareIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_POKEMON } from '../utils/queries';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { pokemonTypes } from '../utils/pokemonTypes';
-import { useHistory } from 'react-router';
+import { CREATE_POKEMON } from '../utils/queries';
+import pokemonTypes from '../utils/pokemonTypes';
 
 type Inputs = {
   name: string;
@@ -31,10 +30,13 @@ type Inputs = {
 // CreatePokemon is the page component for creating new pokemons
 function CreatePokemon() {
   const [imageUrl, setImageUrl] = useState('Test');
-  const [createPokemon, {data}] = useMutation(CREATE_POKEMON);
+  const [createPokemon] = useMutation(CREATE_POKEMON, {
+    update: (mutationResult) => {
+      console.log('mutationResult: ', mutationResult);
+    },
+  });
   const [primaryType, setPrimaryType] = useState<string>('');
   const [secondaryType, setSecondaryType] = useState<string>('');
-  let history = useHistory();
 
   const {
     register,
@@ -45,20 +47,19 @@ function CreatePokemon() {
     createPokemon({
       variables: {
         ...submitData,
-        types: !secondaryType.length
-          ? [primaryType]
-          : secondaryType === primaryType
-          ? [primaryType]
-          : [primaryType, secondaryType],
+        types:
+          !secondaryType.length || secondaryType === primaryType
+            ? [primaryType]
+            : [primaryType, secondaryType],
       },
-    })
-      // TODO: Redirect
+    });
+    // TODO: Redirect
   };
 
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.name ? true : false}>
+        <FormControl isInvalid={!!errors.name}>
           <FormLabel>Name</FormLabel>
           <Input
             id="name"
@@ -77,7 +78,7 @@ function CreatePokemon() {
           </FormErrorMessage>
         </FormControl>
         <Flex mt="10px">
-          <FormControl isInvalid={errors.height ? true : false}>
+          <FormControl isInvalid={!!errors.height}>
             <FormLabel>Height (inches)</FormLabel>
             <Input
               id="height"
@@ -97,7 +98,7 @@ function CreatePokemon() {
               {errors.height && errors.height.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={errors.weight ? true : false}>
+          <FormControl isInvalid={!!errors.weight}>
             <FormLabel>Weight (lbs)</FormLabel>
             <Input
               id="weight"
@@ -111,13 +112,13 @@ function CreatePokemon() {
                 valueAsNumber: true,
                 min: { value: 1, message: 'Weight must be at least 1' },
               })}
-            ></Input>
+            />
             <FormErrorMessage>
               {errors.weight && errors.weight.message}
             </FormErrorMessage>
           </FormControl>
         </Flex>
-        <FormControl mt="10px" isInvalid={errors.primaryType ? true : false}>
+        <FormControl mt="10px" isInvalid={!!errors.primaryType}>
           <FormLabel>Primary type</FormLabel>
           <Select
             placeholder="Select primary type"
@@ -130,7 +131,7 @@ function CreatePokemon() {
               onChange: (e) => setPrimaryType(e.target.value),
             })}
           >
-            {pokemonTypes.map((type) => (
+            {pokemonTypes.map((type: string) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -140,7 +141,7 @@ function CreatePokemon() {
             {errors.primaryType && errors.primaryType.message}
           </FormErrorMessage>
         </FormControl>
-        <FormControl mt="10px" isInvalid={errors.secondaryType ? true : false}>
+        <FormControl mt="10px" isInvalid={!!errors.secondaryType}>
           <FormLabel>Secondary type (optional)</FormLabel>
           <Select
             placeholder="Select secondary type"
@@ -151,7 +152,7 @@ function CreatePokemon() {
               onChange: (e) => setSecondaryType(e.target.value),
             })}
           >
-            {pokemonTypes.map((type) => (
+            {pokemonTypes.map((type: string) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -161,7 +162,7 @@ function CreatePokemon() {
             {errors.secondaryType && errors.secondaryType.message}
           </FormErrorMessage>
         </FormControl>
-        <FormControl mt="10px" isInvalid={errors.description ? true : false}>
+        <FormControl mt="10px" isInvalid={!!errors.description}>
           <FormLabel>Description</FormLabel>
           <Textarea
             id="description"
@@ -173,7 +174,7 @@ function CreatePokemon() {
             })}
           />
         </FormControl>
-        <FormControl mt="10px" isInvalid={errors.imageUrl ? true : false}>
+        <FormControl mt="10px" isInvalid={!!errors.imageUrl}>
           <FormLabel>Image Url</FormLabel>
           <Input
             id="imageUrl"
@@ -199,7 +200,7 @@ function CreatePokemon() {
           border="1px"
           borderRadius="5px"
           fallbackSrc="ImageNotFound.svg"
-          src={imageUrl ? imageUrl : 'ImageNotFound.svg'}
+          src={imageUrl || 'ImageNotFound.svg'}
           alt="Pokemon"
           borderColor="red.500"
           w="100%"
