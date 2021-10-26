@@ -4,136 +4,196 @@ import {
   FormControl,
   FormLabel,
   Input,
-  NumberInput,
-  NumberInputField,
   Textarea,
   Image,
   Flex,
+  FormErrorMessage,
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItemOption,
+  MenuOptionGroup,
 } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, ChevronDownIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useMutation } from '@apollo/client';
 import { CREATE_POKEMON } from "../utils/queries";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { pokemonTypes } from "../utils/pokemonTypes";
 
 
-
+type Inputs = {
+  name: string,
+  description: string,
+  types: string[],
+  height: number,
+  weight: number,
+  imageUrl: string,
+};
 
 // CreatePokemon is the page component for creating new pokemons
 function CreatePokemon() {
-  const [name, setName] = useState("Test");
-  const [height, setHeight] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [description, setDescription] = useState("Test");
   const [imageUrl, setImageUrl] = useState("Test");
-
-  let pokemon = {
-    name: name,
-    description: description,
-    types: ["grass"],
-    weight: weight,
-    height: height,
-    imageUrl: imageUrl,
-  }
   const [createPokemon] = useMutation(CREATE_POKEMON);
+  const [types, setTypes] = useState<string[]>([]);
+
+  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) =>{
+    createPokemon({ variables: { ...data, types: types } })
+    // TODO: Redirect
+  };
 
   return (
     <Container>
-      <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
-        <Input
-          aria-required
-          aria-label="Name input"
-          value={name}
-          type="text"
-          placeholder="Enter pokemon name"
-          onChange={(e) => setName(e.target.value)}
-          mb="10px"
-          borderColor="red.500"
-        />
-      </FormControl>
-      <Flex align="center" justify="center">
-        <FormControl isRequired>
-          <FormLabel>Height (inches)</FormLabel>
-          <NumberInput
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl isInvalid={errors.name ? true : false}>
+          <FormLabel>Name</FormLabel>
+          <Input
+            id="name"
             aria-required
-            aria-label="Height input"
-            value={height}
-            placeholder="123"
-            onChange={(value) => setHeight(parseInt(value))}
-            mb="10px"
-            mr="5px"
+            aria-label="Name input"
+            type="text"
+            placeholder="Enter pokemon name"
             borderColor="red.500"
-          >
-            <NumberInputField />
-          </NumberInput>
+            {...register("name", {
+              required: "This is required",
+              minLength: { value: 3, message: "Minimum length should be 3" },
+            })}
+          />
+          <FormErrorMessage>
+            {errors.name && errors.name.message}
+          </FormErrorMessage>
         </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Weight (lbs)</FormLabel>
-          <NumberInput
+        <Flex mt="10px">
+          <FormControl isInvalid={errors.height ? true : false}>
+            <FormLabel>Height (inches)</FormLabel>
+            <Input
+              id="height"
+              aria-required
+              aria-label="Height input"
+              mr="5px"
+              type="number"
+              placeholder="123"
+              borderColor="red.500"
+              {...register("height", {
+                required: "This is required",
+                valueAsNumber: true,
+                min: { value: 1, message: "Height must be at least 1" },
+              })}
+            />
+            <FormErrorMessage>
+              {errors.height && errors.height.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={errors.weight ? true : false}>
+            <FormLabel>Weight (lbs)</FormLabel>
+            <Input
+              id="weight"
+              aria-required
+              aria-label="Weight input"
+              type="number"
+              placeholder="123"
+              borderColor="red.500"
+              {...register("weight", {
+                required: "This is required",
+                valueAsNumber: true,
+                min: { value: 1, message: "Weight must be at least 1" },
+              })}
+            ></Input>
+            <FormErrorMessage>
+              {errors.weight && errors.weight.message}
+            </FormErrorMessage>
+          </FormControl>
+        </Flex>
+        <FormControl mt="10px" isInvalid={errors.name? true : false}>
+          <Menu closeOnSelect={false}>
+            <MenuButton bgColor="red.500" color="white" as={Button} w="100%">
+              Select types <ChevronDownIcon w="25px" h="25px" />
+            </MenuButton>
+            <MenuList w="100%">
+              <MenuOptionGroup
+                title="Type"
+                type="checkbox"
+                w="100%"
+                id="types"
+                aria-required
+                aria-label="Weight input"
+                {...register("types", {
+                  required: "This is required",
+                  onChange: e => console.log(e)
+                })}
+              >
+                {pokemonTypes.map((type) => (
+                  <MenuItemOption value={type}>{type}</MenuItemOption>
+                ))}
+              </MenuOptionGroup>
+            </MenuList>
+          </Menu>
+        </FormControl>
+        <FormControl isInvalid={errors.description ? true : false}>
+          <FormLabel>Description</FormLabel>
+          <Textarea
+            id="description"
+            aria-label="Description of pokemon input"
+            placeholder="Description of pokemon"
+            borderColor="red.500"
+            {...register("description", {
+              required: "This is required",
+            })}
+          />
+        </FormControl>
+        <FormControl isInvalid={errors.imageUrl ? true : false}>
+          <FormLabel>Image Url</FormLabel>
+          <Input
+            id="imageUrl"
             aria-required
-            aria-label="Weight input"
-            value={weight}
-            placeholder="123"
-            onChange={(value) => setWeight(parseInt(value))}
-            mb="10px"
+            aria-label="Image url input"
+            type="text"
+            placeholder="Enter url for image of pokemon"
             borderColor="red.500"
-          >
-            <NumberInputField w="100%" />
-          </NumberInput>
+            {...register("imageUrl", {
+              onChange: (e) => setImageUrl(e.target.value),
+              required: "This is required",
+            })}
+          />
+          <FormErrorMessage>
+            {errors.imageUrl && errors.imageUrl.message}
+          </FormErrorMessage>
         </FormControl>
-      </Flex>
-      <b>INSERT SELECT HER</b>
-      <FormControl>
-        <FormLabel>
-          Description ({description.length} of 120 characters used)
-        </FormLabel>
-        <Textarea
-          aria-label="Description of pokemon input"
-          value={description}
-          placeholder="Description of pokemon"
-          onChange={(e) =>
-            e.target.value.length <= 120 && setDescription(e.target.value)
-          }
+        <Image
+          boxSize="260px"
+          objectFit="contain"
+          placeholder=""
+          border="1px"
+          mt="10px"
+          borderRadius="5px"
+          fallbackSrc="ImageNotFound.svg"
+          src={imageUrl ? imageUrl : "ImageNotFound.svg"}
+          alt="Pokemon"
           borderColor="red.500"
-        />
-      </FormControl>
-      <FormControl isRequired>
-        <FormLabel>Image Url</FormLabel>
-        <Input
-          aria-required
-          aria-label="Image url input"
-          value={imageUrl}
-          type="text"
-          placeholder="Enter url for image of pokemon"
-          onChange={(e) => setImageUrl(e.target.value)}
+          w="100%"
           mb="10px"
-          borderColor="red.500"
         />
-      </FormControl>
-      <Image
-        boxSize="200px"
-        objectFit="cover"
-        placeholder=""
-        fallbackSrc="https://bitsofco.de/content/images/2018/12/broken-1.png"
-        src={
-          imageUrl
-            ? imageUrl
-            : "https://i.dailymail.co.uk/i/pix/2016/07/13/23/363F755900000578-3688612-A_crowd_of_Pokemon_characters_hides_one_of_the_game_s_most_popul-a-107_1468450011097.jpg"
-        }
-        alt="Pokemon"
-        borderColor="red.500"
-        w="100%"
-        mb="10px"
-      />
-      <Button
-        onClick={() => createPokemon({ variables: pokemon })}
-        bgColor="red.500"
-        color="white"
-        size="lg"
-        w="100%"
-      >
-        <CheckIcon mr="8px" /> Create Pokemon
-      </Button>
+        <Button
+          type="submit"
+          bgColor="red.500"
+          color="white"
+          size="lg"
+          w="100%"
+          isLoading={isSubmitting}
+          disabled={isSubmitSuccessful}
+        >
+          {isSubmitSuccessful ? (
+            <>
+              <CheckIcon mr="8px" /> Submitted redirecting...
+            </>
+          ) : (
+            <>
+              <PlusSquareIcon mr="8px" /> Create Pokemon
+            </>
+          )}
+        </Button>
+      </form>
     </Container>
   );
 }
