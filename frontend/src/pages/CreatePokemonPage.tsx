@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckIcon, PlusSquareIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useMutation } from '@apollo/client';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CREATE_POKEMON } from '../utils/queries';
@@ -30,19 +31,19 @@ type Inputs = {
 // CreatePokemon is the page component for creating new pokemons
 function CreatePokemon() {
   const [imageUrl, setImageUrl] = useState('Test');
-  const [createPokemon] = useMutation(CREATE_POKEMON, {
-    update: (mutationResult) => {
-      console.log('mutationResult: ', mutationResult);
-    },
-  });
+  const [createPokemon] = useMutation(CREATE_POKEMON);
   const [primaryType, setPrimaryType] = useState<string>('');
   const [secondaryType, setSecondaryType] = useState<string>('');
 
+  const history = useHistory();
+  // Handle form-state and register input-elements for validation and submission
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<Inputs>();
+
+  // Handle submission of data
   const onSubmit: SubmitHandler<Inputs> = (submitData) => {
     createPokemon({
       variables: {
@@ -52,8 +53,7 @@ function CreatePokemon() {
             ? [primaryType]
             : [primaryType, secondaryType],
       },
-    });
-    // TODO: Redirect
+    }).then((res) => history.push(`pokemon/${res.data.createPokemon._id}`));
   };
 
   return (
