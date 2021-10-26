@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Link as RouterLink, useParams } from 'react-router-dom';
-import { getGradientByType } from '../utils/getGradientByType';
+import getGradientByType from '../utils/getGradientByType';
 import getIconByType from '../utils/getIconByType';
 import { GET_POKEMON } from '../utils/queries';
 

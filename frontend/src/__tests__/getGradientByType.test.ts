@@ -1,4 +1,4 @@
-import { getGradientByType } from '../utils/getGradientByType';
+import getGradientByType from '../utils/getGradientByType';
 
 describe('getGradientByType', () => {
   test('it should return expected gradient according to type input', () => {
