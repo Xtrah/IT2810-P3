@@ -11,18 +11,19 @@ interface Props {
 const SearchFilter = ({ isOpen }: Props) => {
   const [pokemonSort, setPokemonSort] = useState('');
 
-  let sortDescending = pokemonSort === 'false';
-  console.log(sortDescending);
-
   function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    let sortDescending = JSON.parse(e.target.value);
     setPokemonSort(e.target.value);
-    handleFilterChange(pokemonFilterVar().type);
+    setPokemonFilter({
+      type: pokemonFilterVar().type,
+      sortDescending: sortDescending,
+    });
   }
 
   const handleFilterChange = (type: string) => {
     setPokemonFilter({
       type,
-      sortDescending,
+      sortDescending: pokemonFilterVar().sortDescending,
     });
   };
 

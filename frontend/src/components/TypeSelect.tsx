@@ -1,5 +1,5 @@
-import { Text, Select, HStack, Box } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Text, Select, HStack, Box } from '@chakra-ui/react';
+import React, { useState } from 'react';
 
 interface Props {
   handleFilterChange: (event: string) => void;
@@ -7,7 +7,7 @@ interface Props {
 
 // TypeSelect is a select-input for filtering pokemon according to pokemon types.
 const TypeSelect = ({ handleFilterChange }: Props) => {
-  const [pokemonType, setPokemonType] = useState("");
+  const [pokemonType, setPokemonType] = useState('');
 
   // Update input and update cache
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
