@@ -65,7 +65,8 @@ function CreatePokemonPage() {
       },
     })
       .then((res) => history.push(`pokemon/${res.data.createPokemon._id}`))
-      .catch((err) => console.log(err));
+      // eslint-disable-next-line no-console
+      .catch((err) => console.error('Create pokemon-request failed', err));
   };
 
   return (
