@@ -67,6 +67,7 @@ export const PokemonPage = () => {
             {pokemon.name}
             {pokemon.types.map((type: string) => (
               <Image
+                key={type}
                 ml={2}
                 display="inline"
                 borderRadius="xl"
