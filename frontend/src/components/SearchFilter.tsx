@@ -1,7 +1,7 @@
 import { Box, Collapse, HStack, Select, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { pokemonFilterVar } from '../types/cache';
-import { setPokemonFilter } from '../utils/setPokemonFilter';
+import setPokemonFilter from '../utils/setPokemonFilter';
 import TypeSelect from './TypeSelect';
 
 interface Props {
@@ -11,12 +11,12 @@ interface Props {
 const SearchFilter = ({ isOpen }: Props) => {
   const [pokemonSort, setPokemonSort] = useState('');
 
-  function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    let sortDescending = JSON.parse(e.target.value);
+  function handleSortChange(e: ChangeEvent<HTMLSelectElement>) {
+    const sortDescending = JSON.parse(e.target.value);
     setPokemonSort(e.target.value);
     setPokemonFilter({
       type: pokemonFilterVar().type,
-      sortDescending: sortDescending,
+      sortDescending,
     });
   }
 

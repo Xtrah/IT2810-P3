@@ -1,3 +1,5 @@
+// Console.log is useful here to know things are running.
+/* eslint-disable no-console */
 import mongoose from 'mongoose';
 import { app } from './app';
 

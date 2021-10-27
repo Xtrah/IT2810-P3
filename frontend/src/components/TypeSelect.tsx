@@ -2,6 +2,7 @@ import { Text, Select, HStack, Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 interface Props {
+  // eslint-disable-next-line no-unused-vars
   handleFilterChange: (event: string) => void;
 }
 

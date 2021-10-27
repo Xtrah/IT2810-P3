@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-catch */
+
 import { Pokemon, PokemonAttributes } from '../models/pokemon';
 
 interface QueryOptions {
@@ -7,32 +9,45 @@ interface QueryOptions {
 
 const pokemonResolver = {
   /*
+    Return one pokemon according to id
+  */
+  pokemon: async (args: { _id: string }) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const pokemon = await Pokemon.findById(args._id).exec();
+      return pokemon;
+    } catch (err) {
+      throw err;
+    }
+  },
+  /*
     Return all pokemons or query name or type.
     Sort alphabetically on name by default. Can sort descending.
   */
   pokemons: async (args: {
-    name: string;
-    sortDescending: boolean;
-    type: string;
+    name?: string;
+    sortDescending?: boolean;
+    type?: string;
+    offset?: number;
   }) => {
     try {
       /*
-        Defining name query is optional.
         Query doesn't have to be exact as name.
         Query is case insensitive. 
       */
       const queryOptions: QueryOptions = {
         name: { $regex: new RegExp(args.name || '', 'i') },
       };
-      // Query on type is optional
+
       if (args.type) {
         queryOptions.types = args.type.toLowerCase();
       }
 
-      // Default sort is alphabetically. Can query descending.
-      const sortOptions = { name: args.sortDescending ? -1 : 1 };
       const pokemons = await Pokemon.find(queryOptions)
-        .sort(sortOptions)
+        .limit(10) // Limit number of items per fetch
+        .skip(args.offset || 0) // Used for skipping already fetched items.
+        .collation({ locale: 'en' }) // Case insensitive sort.
+        .sort({ name: args.sortDescending ? -1 : 1 }) // Sort alphabetically by default
         .exec();
       return pokemons;
     } catch (err) {

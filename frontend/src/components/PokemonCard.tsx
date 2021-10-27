@@ -1,6 +1,7 @@
-import { Box, Center, Text, Image } from '@chakra-ui/react';
+import { Box, Center, Text, Image, Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { PokemonLimited } from '../types/pokemon';
-import { getGradientByType } from '../utils/getGradientByType';
+import getGradientByType from '../utils/getGradientByType';
 import getIconByType from '../utils/getIconByType';
 
 interface Props {
@@ -8,8 +9,8 @@ interface Props {
 }
 
 // PokemonCard is used as list item in search results
-const PokemonCard = ({ pokemon }: Props) => {
-  return (
+const PokemonCard = ({ pokemon }: Props) => (
+  <Link as={RouterLink} to={`/pokemon/${pokemon._id}`}>
     <Center
       key={pokemon._id}
       borderRadius="xl"
@@ -17,6 +18,10 @@ const PokemonCard = ({ pokemon }: Props) => {
       mb={2}
       h="100px"
       bgGradient={getGradientByType(pokemon.types[0])}
+      _hover={{
+        opacity: '0.7',
+        transition: '0.5s',
+      }}
     >
       <Box mr={5}>
         <Text color="white">
@@ -42,7 +47,7 @@ const PokemonCard = ({ pokemon }: Props) => {
         alt={pokemon.name}
       />
     </Center>
-  );
-};
+  </Link>
+);
 
 export default PokemonCard;

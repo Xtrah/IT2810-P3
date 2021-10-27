@@ -1,7 +1,10 @@
-import { ChakraProvider, Box } from '@chakra-ui/react';
-import SearchPage from './pages/SearchPage';
 import { ApolloProvider, ApolloClient } from '@apollo/client';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
 import { cache } from './types/cache';
+import Nav from './components/Nav';
+import PokemonPage from './pages/PokemonPage';
+import SearchPage from './pages/SearchPage';
 
 const App = () => {
   const client = new ApolloClient({
@@ -13,9 +16,17 @@ const App = () => {
     <div>
       <ChakraProvider>
         <ApolloProvider client={client}>
-          {/* TODO: Nav should contain navigation */}
-          <Box p={2}>Nav</Box>
-          <SearchPage />
+          <Router>
+            <Nav />
+            <Switch>
+              <Route path="/" exact>
+                <SearchPage />
+              </Route>
+              <Route path="/pokemon/:id">
+                <PokemonPage />
+              </Route>
+            </Switch>
+          </Router>
         </ApolloProvider>
       </ChakraProvider>
     </div>

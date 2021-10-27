@@ -6,32 +6,29 @@ import {
   useDisclosure,
   IconButton,
   HStack,
+  Spinner,
 } from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_POKEMONS_LIMITED, GET_POKEMON_FILTER } from '../utils/queries';
 import PokemonCard from '../components/PokemonCard';
 import { Pokemon } from '../types/pokemon';
-import { pokemonFilterVar } from '../types/cache';
 import SearchFilter from '../components/SearchFilter';
 
-// Home is the home page component, containing search and search results
+// SearchPage contains search and search results
 function SearchPage() {
   const { isOpen, onToggle } = useDisclosure();
 
   const [searchText, setSearchText] = useState('');
-  const { data: pokemonFilter } = useQuery(GET_POKEMON_FILTER);
+  const { data: filterData } = useQuery(GET_POKEMON_FILTER);
   const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
     variables: {
       name: searchText,
-      sortDescending: pokemonFilterVar().sortDescending,
-      type: pokemonFilterVar().type,
+      sortDescending: filterData.pokemonFilter.sortDescending,
+      type: filterData.pokemonFilter.type,
     }, // Queries when search text changes
   });
-
-  // temporary
 
   // Returns UI according to status of data
   const dataResult = () => {
@@ -58,6 +55,7 @@ function SearchPage() {
     <Container>
       <HStack spacing={2}>
         <Input
+          name="search"
           value={searchText}
           pr="4rem"
           type="text"
