@@ -18,7 +18,7 @@ import { pokemonFilterVar } from '../types/cache';
 import SearchFilter from '../components/SearchFilter';
 
 // Home is the home page component, containing search and search results
-function Home() {
+function SearchPage() {
   const { isOpen, onToggle } = useDisclosure();
 
   const [searchText, setSearchText] = useState('');
@@ -79,4 +79,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SearchPage;

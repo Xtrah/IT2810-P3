@@ -1,5 +1,5 @@
 import { ChakraProvider, Box } from '@chakra-ui/react';
-import Home from './pages/Home';
+import SearchPage from './pages/SearchPage';
 import { ApolloProvider, ApolloClient } from '@apollo/client';
 import { cache } from './types/cache';
 
@@ -15,7 +15,7 @@ const App = () => {
         <ApolloProvider client={client}>
           {/* TODO: Nav should contain navigation */}
           <Box p={2}>Nav</Box>
-          <Home />
+          <SearchPage />
         </ApolloProvider>
       </ChakraProvider>
     </div>
