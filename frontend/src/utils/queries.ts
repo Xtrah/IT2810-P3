@@ -74,12 +74,6 @@ export const CREATE_POKEMON = gql`
       }
     ) {
       _id
-      name
-      description
-      types
-      weight
-      height
-      imageUrl
     }
   }
 `;

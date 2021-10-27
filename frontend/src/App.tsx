@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SearchPage from './pages/SearchPage';
 import PokemonPage from './pages/PokemonPage';
 import Nav from './components/Nav';
-import CreatePokemon from './pages/CreatePokemonPage';
+import CreatePokemonPage from './pages/CreatePokemonPage';
 
 const App = () => {
   const client = new ApolloClient({
@@ -37,7 +37,7 @@ const App = () => {
                 <PokemonPage />
               </Route>
               <Route path="/create">
-                <CreatePokemon />
+                <CreatePokemonPage />
               </Route>
             </Switch>
           </Router>

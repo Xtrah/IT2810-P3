@@ -9,6 +9,8 @@ import {
   Flex,
   FormErrorMessage,
   Select,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 import { CheckIcon, PlusSquareIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
@@ -28,10 +30,21 @@ type Inputs = {
   imageUrl: string;
 };
 
+// Returns type(s) based on two type-inputs
+const determineChosenTypes = (primaryType: string, secondaryType: string) => {
+  // Return only primary if no secondary has been chosen or if secondary and primary are the same
+  if (!secondaryType.length || secondaryType === primaryType) {
+    return [primaryType];
+  }
+  return [primaryType, secondaryType];
+};
+
 // CreatePokemon is the page component for creating new pokemons
-function CreatePokemon() {
-  const [imageUrl, setImageUrl] = useState('Test');
-  const [createPokemon] = useMutation(CREATE_POKEMON);
+function CreatePokemonPage() {
+  const [createPokemon, { error, loading }] = useMutation(CREATE_POKEMON);
+
+  // Form-inputs that require controlling outside of useForm()-hook
+  const [imageUrl, setImageUrl] = useState('');
   const [primaryType, setPrimaryType] = useState<string>('');
   const [secondaryType, setSecondaryType] = useState<string>('');
 
@@ -40,7 +53,7 @@ function CreatePokemon() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
   } = useForm<Inputs>();
 
   // Handle submission of data
@@ -48,12 +61,11 @@ function CreatePokemon() {
     createPokemon({
       variables: {
         ...submitData,
-        types:
-          !secondaryType.length || secondaryType === primaryType
-            ? [primaryType]
-            : [primaryType, secondaryType],
+        types: determineChosenTypes(primaryType, secondaryType),
       },
-    }).then((res) => history.push(`pokemon/${res.data.createPokemon._id}`));
+    })
+      .then((res) => history.push(`pokemon/${res.data.createPokemon._id}`))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -64,7 +76,7 @@ function CreatePokemon() {
           <Input
             id="name"
             aria-required
-            aria-label="Name input"
+            aria-label="Name"
             type="text"
             placeholder="Enter pokemon name"
             borderColor="red.500"
@@ -83,7 +95,7 @@ function CreatePokemon() {
             <Input
               id="height"
               aria-required
-              aria-label="Height input"
+              aria-label="Height"
               mr="5px"
               type="number"
               placeholder="123"
@@ -103,7 +115,7 @@ function CreatePokemon() {
             <Input
               id="weight"
               aria-required
-              aria-label="Weight input"
+              aria-label="Weight"
               type="number"
               placeholder="123"
               borderColor="red.500"
@@ -124,7 +136,7 @@ function CreatePokemon() {
             placeholder="Select primary type"
             id="primaryType"
             aria-required
-            aria-label="Primary type select"
+            aria-label="Primary type"
             borderColor="red.500"
             {...register('primaryType', {
               required: 'This is required',
@@ -146,7 +158,7 @@ function CreatePokemon() {
           <Select
             placeholder="Select secondary type"
             id="secondaryType"
-            aria-label="Secondary type select"
+            aria-label="Secondary type"
             borderColor="red.500"
             {...register('secondaryType', {
               onChange: (e) => setSecondaryType(e.target.value),
@@ -166,7 +178,7 @@ function CreatePokemon() {
           <FormLabel>Description</FormLabel>
           <Textarea
             id="description"
-            aria-label="Description of pokemon input"
+            aria-label="Description of pokemon"
             placeholder="Description of pokemon"
             borderColor="red.500"
             {...register('description', {
@@ -179,7 +191,7 @@ function CreatePokemon() {
           <Input
             id="imageUrl"
             aria-required
-            aria-label="Image url input"
+            aria-label="Image url"
             type="text"
             placeholder="Enter url for image of pokemon"
             borderColor="red.500"
@@ -207,6 +219,12 @@ function CreatePokemon() {
           maxHeight="250px"
           mb="10px"
         />
+        {error && (
+          <Alert status="error" mb="10px">
+            <AlertIcon />
+            Something went wrong! Please try again
+          </Alert>
+        )}
         <Button
           type="submit"
           bgColor="red.500"
@@ -214,15 +232,17 @@ function CreatePokemon() {
           size="lg"
           w="100%"
           isLoading={isSubmitting}
-          disabled={isSubmitSuccessful}
+          disabled={loading}
         >
-          {isSubmitSuccessful ? (
+          {loading ? (
             <>
-              <CheckIcon mr="8px" /> Submitted redirecting...
+              <CheckIcon mr="8px" />
+              Submitting ...
             </>
           ) : (
             <>
-              <PlusSquareIcon mr="8px" /> Create Pokemon
+              <PlusSquareIcon mr="8px" />
+              Create Pokemon
             </>
           )}
         </Button>
@@ -231,4 +251,4 @@ function CreatePokemon() {
   );
 }
 
-export default CreatePokemon;
+export default CreatePokemonPage;
