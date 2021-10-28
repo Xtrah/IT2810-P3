@@ -34,6 +34,10 @@ interface FilteredPokemon {
   imageUrl: string;
 }
 
+/**
+ * Fetch pokemon from pokeapi.co in given interval
+ * @returns array with all pokemon with name, types, description, height, weight and imageUrl
+ */
 const fetchPokemon = async () => {
   const pokemonData: FilteredPokemon[] = [];
   const fromPokemon = 1;
