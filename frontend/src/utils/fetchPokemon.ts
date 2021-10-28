@@ -36,13 +36,14 @@ interface FilteredPokemon {
 
 /**
  * Fetch pokemon from pokeapi.co in given interval
+ * 
+ * @param firstPokemonId id of first pokemon to fetch
+ * @param lastPokemonId id of last pokemon to fetch
  * @returns array with all pokemon with name, types, description, height, weight and imageUrl
  */
-const fetchPokemon = async () => {
+const fetchPokemon = async (firstPokemonId: number, lastPokemonId:number) => {
   const pokemonData: FilteredPokemon[] = [];
-  const fromPokemon = 1;
-  const lastPokemon = 151;
-  for (let pokemonId = fromPokemon; pokemonId <= lastPokemon; pokemonId += 1) {
+  for (let pokemonId = firstPokemonId; pokemonId <= lastPokemonId; pokemonId += 1) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
       .then<APIPokemon>((res) => res.json())
       .then((pokemonRes) => {
