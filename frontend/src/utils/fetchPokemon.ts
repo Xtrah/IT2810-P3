@@ -35,15 +35,20 @@ interface FilteredPokemon {
 }
 
 /**
- * Fetch pokemon from pokeapi.co in given interval
- * 
+ * Fetch pokemon from pokeapi.co in given interval. You can call it in a component and stringify the data.
+ * Then potentially load the data to your database through MongoDB Compass
+ *
  * @param firstPokemonId id of first pokemon to fetch
  * @param lastPokemonId id of last pokemon to fetch
  * @returns array with all pokemon with name, types, description, height, weight and imageUrl
  */
-const fetchPokemon = async (firstPokemonId: number, lastPokemonId:number) => {
+const fetchPokemon = async (firstPokemonId: number, lastPokemonId: number) => {
   const pokemonData: FilteredPokemon[] = [];
-  for (let pokemonId = firstPokemonId; pokemonId <= lastPokemonId; pokemonId += 1) {
+  for (
+    let pokemonId = firstPokemonId;
+    pokemonId <= lastPokemonId;
+    pokemonId += 1
+  ) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
       .then<APIPokemon>((res) => res.json())
       .then((pokemonRes) => {
