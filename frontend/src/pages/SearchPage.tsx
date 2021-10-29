@@ -7,6 +7,8 @@ import {
   IconButton,
   HStack,
   Spinner,
+  Button,
+  Center,
 } from '@chakra-ui/react';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
@@ -16,19 +18,35 @@ import PokemonCard from '../components/PokemonCard';
 import { Pokemon } from '../types/pokemon';
 import SearchFilter from '../components/SearchFilter';
 
+// This value aligns with the hardcoded limit in backend
+const ITEM_FETCH_LIMIT = 10;
+
 // SearchPage contains search and search results
 function SearchPage() {
+  // Used for filterdisplay toggle
   const { isOpen, onToggle } = useDisclosure();
 
   const [searchText, setSearchText] = useState('');
   const { data: filterData } = useQuery(GET_POKEMON_FILTER);
-  const { loading, error, data } = useQuery(GET_POKEMONS_LIMITED, {
+  const { loading, error, data, fetchMore } = useQuery(GET_POKEMONS_LIMITED, {
     variables: {
       name: searchText,
       sortDescending: filterData.pokemonFilter.sortDescending,
       type: filterData.pokemonFilter.type,
-    }, // Queries when search text changes
+    },
   });
+
+  // Start first fetchmore with offset, to add to the already fetched items
+  const [offset, setOffset] = useState(ITEM_FETCH_LIMIT);
+  // Query more items and update offset
+  const onLoadMore = () => {
+    fetchMore({
+      variables: {
+        name: searchText,
+        offset,
+      },
+    }).then(() => setOffset(offset + ITEM_FETCH_LIMIT));
+  };
 
   // Returns UI according to status of data
   const dataResult = () => {
@@ -73,6 +91,19 @@ function SearchPage() {
       <SearchFilter isOpen={isOpen} />
 
       {dataResult()}
+
+      <Center height="100px">
+        <Button
+          disabled={loading}
+          bgColor="red.500"
+          color="white"
+          h="1.75rem"
+          size="sm"
+          onClick={onLoadMore}
+        >
+          Load more
+        </Button>
+      </Center>
     </Container>
   );
 }
