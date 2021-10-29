@@ -1,6 +1,7 @@
 import { Text, Select, HStack, Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { pokemonFilterVar } from '../cache';
+import pokemonTypes from '../utils/pokemonTypes';
 import setPokemonFilter from '../utils/setPokemonFilter';
 
 // TypeSelect is a select-input for filtering pokemon according to pokemon types.
@@ -25,29 +26,20 @@ const TypeSelect = () => {
         </Text>
       </Box>
       <Select
-        borderColor="red.500"
-        border="4px"
+        bg="red.500"
+        color="white"
         value={pokemonType}
         onChange={handleChange}
+        // This is to prevent white text being on white background in option select
+        _focus={{
+          color: 'black',
+        }}
       >
-        <option value="">Show all</option>
-        <option value="fire">Fire</option>
-        <option value="water">Water</option>
-        <option value="grass">Grass</option>
-        <option value="electric">Electric</option>
-        <option value="ice">Ice</option>
-        <option value="fighting">Fighting</option>
-        <option value="poison">Poison</option>
-        <option value="ground">Ground</option>
-        <option value="flying">Flying</option>
-        <option value="psychic">Psychic</option>
-        <option value="bug">Bug</option>
-        <option value="rock">Rock</option>
-        <option value="ghost">Ghost</option>
-        <option value="dark">Dark</option>
-        <option value="dragon">Dragon</option>
-        <option value="steel">Steel</option>
-        <option value="fairy">Fairy</option>
+        {pokemonTypes.map((type: string) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
       </Select>
     </HStack>
   );

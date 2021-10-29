@@ -39,12 +39,14 @@ const SearchFilter = ({ isOpen }: Props) => {
           </Box>
 
           <Select
-            // bg="red.500"
-            // color="white"
-            borderColor="red.500"
-            border="4px"
-            value={pokemonSort}
+            bg="red.500"
             onChange={handleSortChange}
+            value={pokemonSort}
+            color="white"
+            // This is to prevent white text being on white background in option select
+            _focus={{
+              color: 'black',
+            }}
           >
             <option value="false">Ascending</option>
             <option value="true">Descending</option>
