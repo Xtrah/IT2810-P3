@@ -45,7 +45,7 @@ export const PokemonPage = () => {
   return (
     <Box>
       <Container>
-        <Link as={RouterLink} to="/" color="red.500" fontWeight="bold">
+        <Link as={RouterLink} to="/project3" color="red.500" fontWeight="bold">
           <Text>
             <ArrowBackIcon boxSize={10} />
             Back to search

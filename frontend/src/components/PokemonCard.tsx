@@ -10,7 +10,7 @@ interface Props {
 
 // PokemonCard is used as list item in search results
 const PokemonCard = ({ pokemon }: Props) => (
-  <Link as={RouterLink} to={`/pokemon/${pokemon._id}`}>
+  <Link as={RouterLink} to={`/project3/pokemon/${pokemon._id}`}>
     <Center
       key={pokemon._id}
       borderRadius="xl"

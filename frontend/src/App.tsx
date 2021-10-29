@@ -9,7 +9,7 @@ import CreatePokemonPage from './pages/CreatePokemonPage';
 
 const App = () => {
   const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql',
+    uri: 'http://it2810-15.idi.ntnu.no:4000/graphql',
     cache,
   });
 
@@ -20,13 +20,13 @@ const App = () => {
           <Router>
             <Nav />
             <Switch>
-              <Route path="/" exact>
+              <Route path="/project3" exact>
                 <SearchPage />
               </Route>
-              <Route path="/pokemon/:id">
+              <Route path="/project3/pokemon/:id">
                 <PokemonPage />
               </Route>
-              <Route path="/create">
+              <Route path="/project3/create">
                 <CreatePokemonPage />
               </Route>
             </Switch>
