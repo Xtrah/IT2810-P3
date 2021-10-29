@@ -103,7 +103,7 @@ From search results, one can click into details of a pokemon. This does a new qu
 
 ### 🗃 Sorting and filtering search
 
-<!-- TODO -->
+A user can sort on name and filter on pokemon types. These are inputs which are toggled using the cog-icon. Sort and filter are variables the result query is dependent on. The GraphQL query supports these variables. In the backend the resolver handles the variables, updating the find-argument to filter on pokemon types and the sort will order the results. If a user does not set the variables, there will be no filtering on type and sort on name is ascending.
 
 ### ⌨ User generated data
 

@@ -65,16 +65,19 @@ export const PokemonPage = () => {
         <Box mb={5} mt={2}>
           <Heading textAlign="left" color="black">
             {pokemon.name}
-            <Image
-              ml={2}
-              display="inline"
-              borderRadius="xl"
-              boxSize="20px"
-              objectFit="cover"
-              bgGradient={getGradientByType(pokemon.types[0])}
-              src={getIconByType(pokemon.types[0])}
-              alt={pokemon.name}
-            />
+            {pokemon.types.map((type: string) => (
+              <Image
+                key={type}
+                ml={2}
+                display="inline"
+                borderRadius="xl"
+                boxSize="20px"
+                objectFit="cover"
+                bgGradient={getGradientByType(type)}
+                src={getIconByType(type)}
+                alt={pokemon.name}
+              />
+            ))}
           </Heading>
           <Text textAlign="left">{pokemon.description}</Text>
         </Box>

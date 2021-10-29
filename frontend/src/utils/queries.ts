@@ -61,3 +61,28 @@ export const GET_POKEMON_FILTER = gql`
     }
   }
 `;
+
+// Create pokemon with all fields
+export const CREATE_POKEMON = gql`
+  mutation (
+    $name: String!
+    $description: String!
+    $types: [String!]!
+    $weight: Int!
+    $height: Int!
+    $imageUrl: String!
+  ) {
+    createPokemon(
+      pokemonInput: {
+        name: $name
+        description: $description
+        types: $types
+        weight: $weight
+        height: $height
+        imageUrl: $imageUrl
+      }
+    ) {
+      _id
+    }
+  }
+`;

@@ -5,6 +5,7 @@ import { cache } from './cache';
 import Nav from './components/Nav';
 import PokemonPage from './pages/PokemonPage';
 import SearchPage from './pages/SearchPage';
+import CreatePokemonPage from './pages/CreatePokemonPage';
 
 const App = () => {
   const client = new ApolloClient({
@@ -24,6 +25,9 @@ const App = () => {
               </Route>
               <Route path="/pokemon/:id">
                 <PokemonPage />
+              </Route>
+              <Route path="/create">
+                <CreatePokemonPage />
               </Route>
             </Switch>
           </Router>
