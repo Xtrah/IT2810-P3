@@ -20,13 +20,6 @@ const SearchFilter = ({ isOpen }: Props) => {
     });
   }
 
-  const handleFilterChange = (type: string) => {
-    setPokemonFilter({
-      type,
-      sortDescending: pokemonFilterVar().sortDescending,
-    });
-  };
-
   return (
     <Collapse in={isOpen} animateOpacity>
       <Box
@@ -37,7 +30,7 @@ const SearchFilter = ({ isOpen }: Props) => {
         rounded="md"
         shadow="md"
       >
-        <TypeSelect handleFilterChange={handleFilterChange} />
+        <TypeSelect />
         <HStack>
           <Box minW="125px" p={4}>
             <Text fontWeight="500" fontSize="md">
@@ -46,8 +39,10 @@ const SearchFilter = ({ isOpen }: Props) => {
           </Box>
 
           <Select
-            bg="red.500"
-            color="white"
+            // bg="red.500"
+            // color="white"
+            borderColor="red.500"
+            border="4px"
             value={pokemonSort}
             onChange={handleSortChange}
           >

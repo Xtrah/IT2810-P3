@@ -1,19 +1,20 @@
 import { Text, Select, HStack, Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
-
-interface Props {
-  // eslint-disable-next-line no-unused-vars
-  handleFilterChange: (event: string) => void;
-}
+import { pokemonFilterVar } from '../types/cache';
+import setPokemonFilter from '../utils/setPokemonFilter';
 
 // TypeSelect is a select-input for filtering pokemon according to pokemon types.
-const TypeSelect = ({ handleFilterChange }: Props) => {
+const TypeSelect = () => {
   const [pokemonType, setPokemonType] = useState('');
 
   // Update input and update cache
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const type = e.target.value;
     setPokemonType(e.target.value);
-    handleFilterChange(e.target.value);
+    setPokemonFilter({
+      type,
+      sortDescending: pokemonFilterVar().sortDescending,
+    });
   }
 
   return (
@@ -24,13 +25,11 @@ const TypeSelect = ({ handleFilterChange }: Props) => {
         </Text>
       </Box>
       <Select
-        bg="red.500"
-        color="white"
+        borderColor="red.500"
+        border="4px"
         value={pokemonType}
         onChange={handleChange}
       >
-        <option value="">Show all</option>
-        <option value="normal">Normal</option>
         <option value="fire">Fire</option>
         <option value="water">Water</option>
         <option value="grass">Grass</option>
