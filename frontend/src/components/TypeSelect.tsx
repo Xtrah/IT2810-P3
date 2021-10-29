@@ -1,12 +1,16 @@
+import { useQuery } from '@apollo/client';
 import { Text, Select, HStack, Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { pokemonFilterVar } from '../cache';
 import pokemonTypes from '../utils/pokemonTypes';
+import { GET_POKEMON_FILTER } from '../utils/queries';
 import setPokemonFilter from '../utils/setPokemonFilter';
 
 // TypeSelect is a select-input for filtering pokemon according to pokemon types.
 const TypeSelect = () => {
-  const [pokemonType, setPokemonType] = useState('');
+  // Get filter to initialize select value
+  const { data: filterData } = useQuery(GET_POKEMON_FILTER);
+  const [pokemonType, setPokemonType] = useState(filterData.pokemonFilter.type);
 
   // Update input and update cache
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {

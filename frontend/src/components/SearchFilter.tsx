@@ -1,18 +1,24 @@
+import { useQuery } from '@apollo/client';
 import { Box, Collapse, HStack, Select, Text } from '@chakra-ui/react';
 import { useState, ChangeEvent } from 'react';
 import { pokemonFilterVar } from '../cache';
 import setPokemonFilter from '../utils/setPokemonFilter';
 import TypeSelect from './TypeSelect';
+import { GET_POKEMON_FILTER } from '../utils/queries';
 
 interface Props {
   isOpen: boolean;
 }
 
 const SearchFilter = ({ isOpen }: Props) => {
-  const [pokemonSort, setPokemonSort] = useState('');
+  // Get filter to initialize select value
+  const { data: filterData } = useQuery(GET_POKEMON_FILTER);
+  const [pokemonSort, setPokemonSort] = useState(
+    filterData.pokemonFilter.sortDescending
+  );
 
   function handleSortChange(e: ChangeEvent<HTMLSelectElement>) {
-    const sortDescending = JSON.parse(e.target.value);
+    const sortDescending = e.target.value === 'true';
     setPokemonSort(e.target.value);
     setPokemonFilter({
       type: pokemonFilterVar().type,
