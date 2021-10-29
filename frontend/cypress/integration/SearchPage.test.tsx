@@ -5,11 +5,11 @@ describe('Search input and results', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     searchText = 'exegg';
-    cy.get('input[name="searchInput"]').type(searchText);
+    cy.get('input[name="search"]').type(searchText);
   });
 
   it('search field reacts to user input', () => {
-    cy.get('input[name="searchInput"]').should('have.value', searchText);
+    cy.get('input[name="search"]').should('have.value', searchText);
   });
 
   it('search results show text and image of pokemon', () => {
@@ -28,7 +28,7 @@ describe('Search input and results', () => {
     */
     cy.get('p').filter(`:contains(${searchText})`).should('have.length', 2);
     searchText = 'utor';
-    cy.get('input[name="searchInput"]').type(searchText);
+    cy.get('input[name="search"]').type(searchText);
     cy.get('p').filter(`:contains(${searchText})`).should('have.length', 1);
   });
 });
