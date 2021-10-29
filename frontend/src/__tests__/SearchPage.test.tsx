@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { ChakraProvider } from '@chakra-ui/react';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import SearchPage from '../pages/SearchPage';
-import { cache } from '../types/cache';
+import { cache } from '../cache';
 
 describe('<SearchPage />', () => {
   it('search field reacts to user input', () => {

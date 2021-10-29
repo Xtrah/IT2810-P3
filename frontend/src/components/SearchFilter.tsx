@@ -1,6 +1,6 @@
 import { Box, Collapse, HStack, Select, Text } from '@chakra-ui/react';
 import { useState, ChangeEvent } from 'react';
-import { pokemonFilterVar } from '../types/cache';
+import { pokemonFilterVar } from '../cache';
 import setPokemonFilter from '../utils/setPokemonFilter';
 import TypeSelect from './TypeSelect';
 

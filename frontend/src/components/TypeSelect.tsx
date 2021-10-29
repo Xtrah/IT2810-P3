@@ -1,6 +1,6 @@
 import { Text, Select, HStack, Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { pokemonFilterVar } from '../types/cache';
+import { pokemonFilterVar } from '../cache';
 import setPokemonFilter from '../utils/setPokemonFilter';
 
 // TypeSelect is a select-input for filtering pokemon according to pokemon types.
@@ -30,6 +30,7 @@ const TypeSelect = () => {
         value={pokemonType}
         onChange={handleChange}
       >
+        <option value="">Show all</option>
         <option value="fire">Fire</option>
         <option value="water">Water</option>
         <option value="grass">Grass</option>

@@ -1,4 +1,4 @@
-import { pokemonFilterVar, PokemonFilter } from '../types/cache';
+import { pokemonFilterVar, PokemonFilter } from '../cache';
 
 const setPokemonFilter = (newFilter: PokemonFilter) => {
   pokemonFilterVar(newFilter);

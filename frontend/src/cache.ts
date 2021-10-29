@@ -7,16 +7,15 @@ export interface PokemonFilter {
 }
 
 /**
- * PokemonFilterVar handles the filter variables.
+ * Handles the filter variables.
  *
- * It allows for saving and retireval of filter states in the cache.
+ * It allows for saving and retrieval of filter states in the cache.
+ * Here we set the initial values for the filter.
  */
 export const pokemonFilterVar = makeVar<PokemonFilter>({
   type: '',
   sortDescending: false,
 });
-
-// Here we set the initial values for the filter.
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
