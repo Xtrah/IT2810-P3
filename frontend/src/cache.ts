@@ -1,10 +1,6 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
-
-export interface PokemonFilter {
-  type: string;
-  sortDescending: boolean;
-}
+import PokemonFilter from './types/pokemonFilter';
 
 /**
  * Handles the filter variables.
