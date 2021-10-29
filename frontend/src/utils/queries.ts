@@ -53,6 +53,15 @@ export const GET_POKEMONS_LIMITED = gql`
   }
 `;
 
+export const GET_POKEMON_FILTER = gql`
+  query GetPokemonFilter {
+    pokemonFilter @client {
+      type
+      sortDescending
+    }
+  }
+`;
+
 // Create pokemon with all fields
 export const CREATE_POKEMON = gql`
   mutation (
