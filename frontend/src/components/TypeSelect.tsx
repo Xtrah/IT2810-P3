@@ -24,7 +24,7 @@ const TypeSelect = ({ handleFilterChange }: Props) => {
         </Text>
       </Box>
       <Select
-        bg="var(--chakra-colors-red-500);"
+        bg="red.500"
         color="white"
         value={pokemonType}
         onChange={handleChange}

@@ -33,7 +33,7 @@ const SearchFilter = ({ isOpen }: Props) => {
         p="20px"
         mt="4"
         border="2px"
-        borderColor="red"
+        borderColor="red.500"
         rounded="md"
         shadow="md"
       >
@@ -46,7 +46,7 @@ const SearchFilter = ({ isOpen }: Props) => {
           </Box>
 
           <Select
-            bg="var(--chakra-colors-red-500);"
+            bg="red.500"
             color="white"
             value={pokemonSort}
             onChange={handleSortChange}
