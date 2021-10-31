@@ -64,7 +64,9 @@ function CreatePokemonPage() {
         types: determineChosenTypes(primaryType, secondaryType),
       },
     })
-      .then((res) => history.push(`/project3/pokemon/${res.data.createPokemon._id}`))
+      .then((res) =>
+        history.push(`/project3/pokemon/${res.data.createPokemon._id}`)
+      )
       // eslint-disable-next-line no-console
       .catch((err) => console.error('Create pokemon-request failed', err));
   };
