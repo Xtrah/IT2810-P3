@@ -4,7 +4,7 @@ exports[`<PokemonCard /> should match snapshot with data 1`] = `
 Array [
   <a
     className="chakra-link css-f4h6uy"
-    href="/pokemon/randomid"
+    href="/project3/pokemon/randomid"
     onClick={[Function]}
   >
     <div

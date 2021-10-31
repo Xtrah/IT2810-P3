@@ -31,7 +31,7 @@ export const Nav = () => {
       rounded="md"
       bg="white"
     >
-      <Link as={RouterLink} to="/">
+      <Link as={RouterLink} to="/project3">
         <Text textAlign="left" color="black" width="250px">
           <Image
             mr={2}
@@ -45,7 +45,7 @@ export const Nav = () => {
           {getNavTitle(pathname)}
         </Text>
       </Link>
-      <Link as={RouterLink} to="/create">
+      <Link as={RouterLink} to="/project3/create">
         <Button bgColor="red.500" color="white" h="1.75rem" p={4}>
           <PlusSquareIcon fontSize="2xl" />
         </Button>

@@ -39,6 +39,7 @@ const TypeSelect = () => {
           color: 'black',
         }}
       >
+        <option value="">Show all</option>
         {pokemonTypes.map((type: string) => (
           <option key={type} value={type}>
             {type}
